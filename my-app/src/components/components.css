@@ -1,0 +1,50 @@
+.NavMenue {
+    border-radius: 0px !important;
+    height: 15vh !important;
+    width: 100px !important;
+    text-align: center !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin-top: -20px !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  
+  .NavMenue a {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 100% !important;
+  }
+
+  /*navmenue turn light blue when clicked on*/
+    .NavMenue:active {
+        background-color: blue  !important;
+    }
+  .NavMenue:hover {
+    background-color: #f1f1f1 !important;
+  }
+
+  
+  
+  ul {
+
+    height: 15vh !important;
+  }
+  
+  li {
+    margin: 0 !important;
+    height: 15vh !important;
+  }
+  
+  /* Make nav the full page */
+  nav {
+    width: 100vw !important;
+    height: 15vh !important;
+    position: relative !important;
+    background-color: white !important;
+    top: 0 !important; /* Add top position to prevent covering the content */
+    left: 0 !important; /* Add left position to align with the top-left corner */
+  }
+
