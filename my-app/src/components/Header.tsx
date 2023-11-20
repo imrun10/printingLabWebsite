@@ -1,5 +1,5 @@
 import React from 'react';
-import '../app/css/pico.min.css';
+import '../css/pico.min.css';
 import '../components/components.css'
 import Image from 'next/image';
 

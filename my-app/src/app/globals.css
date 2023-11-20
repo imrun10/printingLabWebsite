@@ -1,6 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 body {
   margin: 0;
   overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+ul {
+  list-style-type: none;
 }
 
 .card-shadow {
@@ -9,14 +19,25 @@ body {
   border-radius: 5px !important; /* 5px rounded corners */
 }
 
+.outline {
+  border-style: dotted;
+}
 
 #btn{
   background-color: red;
   color:#f1f1f1
 }
 
+
+
 #btn:hover {
   background-color: blue !important;
 
 }
 
+.item-shadow {
+  background-color: #ffffff;
+  border-radius: 0;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  padding: 16px;
+}

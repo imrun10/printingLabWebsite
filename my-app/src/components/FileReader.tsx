@@ -1,35 +1,51 @@
-'use client'
-import React, { useState } from 'react';
+import React, { use, useRef, useEffect, useState } from "react";
 
 interface StlFileReaderProps {
-  onChange: (file: File) => void;
+  onChange: (file: File | null) => void;
 }
 
 const StlFileReader: React.FC<StlFileReaderProps> = ({ onChange }) => {
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [filled, hasFile]= useState<boolean>(false);
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) {
-      return;
-    }
-    setSelectedFile(file);
-    onChange(file); // Call the onChange prop with the selected file
+    const file = event.target.files && event.target.files[0];
+    hasFile(true);
+    onChange(file);
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (selectedFile) {
-      console.log('Selected File:', selectedFile);
-      // Add your logic here to handle the file
+  const handleClearFile = () => {
+
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ""; // Clear the file input value
+      hasFile(false);
     }
+    onChange(null);
+    hasFile(false);
   };
+
+  //useffect to check if file is uploaded
+  
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input type="file" accept=".stl" onChange={handleFileChange} />
-      <button type="submit">Upload</button>
-    </form>
+    <div>
+      {filled ? (
+        <button className="bg-red-500 rounded-none hover:bg-red-400 text-white justify-center h-full w-full p-20 font-bold py-1.5 px-4 border-0 "onClick={handleClearFile}>Clear File</button>
+      ) : (
+        <label className="bg-green-500 hover:bg-green-400 text-white justify-center h-full w-full p-20 font-bold py-2 px-4 ">
+          Upload File
+          <input
+          
+            type="file"
+            accept=".stl"
+            ref={fileInputRef}
+            onChange={handleFileChange}
+            style={{ display: "none" }}
+          />
+        </label>
+      )}
+    </div>
   );
 };
 
