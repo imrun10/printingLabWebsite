@@ -33,7 +33,6 @@ interface Purchase {
   Color: string;
   SizeXYZ: number[];
   Finish: string;
-  Quantity: number;
   Service: string;
 }
 
@@ -177,7 +176,10 @@ export default function CardLayout() {
       purchase.Price = price;
       purchase.Color = color;
       purchase.Finish = selectedFinish;
-      purchase.SizeXYZ = [1,2,3]
+      purchase.SizeXYZ = size
+      purchase.Service = ""
+      purchase.stlFile = selectedFile as File;
+
       setDone(true)
 
 
@@ -188,7 +190,7 @@ export default function CardLayout() {
     <div className="grid-rows-2 gap-0">
           <div className="h-96 grid grid-cols-4 gap-0 flex-1">
       <div className="container display item-shadow col-span-3 flex flex-col">
-        {tab === 1 && selectedFile && <StlViewer file={selectedFile} />}
+        {tab === 1 && selectedFile && <StlViewer file={selectedFile} onData={setSize}/>}
         {tab === 2 &&
           materials.map((material) => {
             return (
@@ -255,8 +257,12 @@ export default function CardLayout() {
         <div className="col-span-1 pb-0 mb-0 ">
           {
             done ? <Link href={{pathname:"/dev/payment", query: {
-              
-
+              price: price,
+              color: color,
+              finish: selectedFinish,
+              size: size,
+              material: selectedMaterial,
+            
             }}}><div
             className="item-shadow bg-blue-800 text-white font-sans pb-6 font-medium flex items-center justify-center text-center text-lg hover:opacity-75 hover:transition-opacity duration-300"
             onClick={handleNext}
@@ -271,7 +277,7 @@ export default function CardLayout() {
         }
         </div>
         <div>
-          {tab==1 && <StlFileReader onChange={setSelectedFile,setSize} />}
+          {tab==1 && <StlFileReader onChange={setSelectedFile} />}
           {tab==1 && selectedFile && <p className="m-0 p-0">{validationResult}</p>}
         </div>
       </div>

@@ -1,5 +1,6 @@
 import "../animation.css"
 
+import PaypalButton from './Paypal';
 import React, { useEffect, useState } from 'react';
 import PaymentOptions from './PaymentOptions';
 import "./calender.css"
@@ -36,7 +37,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ price }) => {
   return (
     <div className="flex flex-col items-center justify-center h-screen">
       <div className="flex flex-col md:flex-row items-start">
-        <div className="max-w-xl w-full md:w-1/2 bg-white shadow-md p-6 rounded-none">
+        <div className="max-w-xl w-full md:w-1/2 bg-white shadow-md p-6 m-0  rounded-none">
           <h2 className="text-2xl font-bold mb-4">Booking</h2>
           <div className="mb-4">
             <label htmlFor="name" className="block text-gray-700 font-bold mb-2">
@@ -69,21 +70,17 @@ const BookingForm: React.FC<BookingFormProps> = ({ price }) => {
             <GfgDatePicker />
           </div>
         </div>
-        <div className="max-w-xl w-full md:w-1/2 bg-white rounded-lg shadow-md p-6  ml-0 md:ml-4">
-          {showPaymentOptions ? (
-            <>
-              <h2 className="text-2xl font-bold mb-4">Payment Options</h2>
-              <PaymentOptions handlePaymentSubmit={handlePaymentSubmit} />
-            </>
-          ) : (
+        <div className="max-w-xl max-l-xl h-full w-full md:w-1/2 bg-white rounded-none shadow-md p-6  ml-0 md:ml-0">
+           
             <div className="text-center">
               <h2 className="text-2xl font-bold mb-4">Payment Options</h2>
               <p>Please fill in all the required fields.</p>
+              <PaypalButton />
             </div>
-          )}
+          
         </div>
       </div>
-      <div className="max-w-xl bg-white rounded-lg shadow-md p-6 mt-0 mb-6 text-center">
+      <div className="max-w-xl bg-white shadow-md py-6 mt-0 mb-6 w-96 rounded-none text-center">
         <h3 className="text-3xl font-bold mb-4">Price: ${price}</h3>
       </div>
     </div>
@@ -91,3 +88,4 @@ const BookingForm: React.FC<BookingFormProps> = ({ price }) => {
 };
 
 export default BookingForm;
+

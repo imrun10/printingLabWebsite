@@ -3,12 +3,21 @@ import React, { useState, useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { STLLoader } from 'three/examples/jsm/loaders/STLLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { blob } from 'stream/consumers';
 
-export default function StlViewer({ file }: { file: File | null }, { size }: { size: number[] }) {
+interface StlFileReaderProps {
+  file: File
+  onData: (data: number[]) => void;
+
+}
+
+export default function StlViewer({ file, onData }: StlFileReaderProps ){
   const containerRef = useRef<HTMLDivElement>(null);
   const meshRef = useRef<THREE.Mesh | null>(null);
   const [width, setWidth] = useState<number>(0);
   const [height, setHeight] = useState<number>(0);
+  const [size, setSize] = useState<number[]>([0,0,0]);
+
 
 
   useEffect(() => {
@@ -50,12 +59,12 @@ export default function StlViewer({ file }: { file: File | null }, { size }: { s
 
           renderer.setSize(width, height);
           const boundingBox = new THREE.Box3().setFromObject(mesh);
-          const size = boundingBox.getSize(new THREE.Vector3()); // Returns Vector3
-          console.log(size.x, size.y, size.z);
+          const size2 = boundingBox.getSize(new THREE.Vector3()); // Returns Vector3
+          setSize(size2.toArray());
           containerRef.current?.appendChild(renderer.domElement);
 
           // Add XYZ Axis
-          const axisLength = Math.max(size.x, size.y, size.z) * 2;
+          const axisLength = Math.max(size2.x, size2.y, size2.z) * 2;
           const axisHelper = new THREE.AxesHelper(axisLength);
           scene.add(axisHelper);
 
