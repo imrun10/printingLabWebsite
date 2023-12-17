@@ -1,6 +1,10 @@
 "use client"
-import PaypalButton from '@/components/Payments/Paypal';
+import PayPalButtonComponent from '@/components/Payments/Paypal';
 
 export default function Page(){
-  return (<div><PaypalButton /></div>)
+
+    const handleSuccess = () => {
+        console.log("Success")
+    }
+  return (<div></div>)
 }

@@ -12,7 +12,7 @@ import Router from "next/router";
 
 
 import Cards from "./Card";
-import superbase from "../app/utils/superbase";
+import superbase from "../app/utils/database/superbase";
 import Link from "next/link";
 import { NoColorSpace } from "three";
 type Value = ValuePiece | [ValuePiece, ValuePiece];
