@@ -1,10 +1,10 @@
 'use client';
 import React, { useState, createContext } from 'react';
-import StlViewer from '../../components/StlViewer';
-import StlFileReader from '../../components/FileReader';
+import StlViewer from '../../components/StlViewer/StlViewer';
+import StlFileReader from '../../components/StlViewer/FileReader';
 import Header from '@/components/Header';
 import "tailwindcss/tailwind.css"
-import CardWrapper from '@/components/StlViewLayout';
+import CardWrapper from '@/components/StlViewer/StlViewLayout';
 
 interface Purchase {
   stlFile: File;

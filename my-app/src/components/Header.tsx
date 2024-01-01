@@ -1,6 +1,6 @@
 import React from 'react';
 import '../css/pico.min.css';
-import '../components/components.css'
+import '../components/componentsCSS/components.css'
 import Image from 'next/image';
 
 const Header: React.FC = () => {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Modal from './paymentPopUp';
 import PayPalButtonComponent from './Paypal';
-import GfgDatePicker from './calender';
+import GfgDatePicker from '../calender';
 import '../animation.css';
 import './calender.css';
 
