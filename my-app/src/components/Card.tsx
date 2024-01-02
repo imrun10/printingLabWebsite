@@ -7,7 +7,7 @@ import { BADHINTS } from 'dns';
 
 interface MaterialsProps {
   name: string;
-  price: number;
+  price: string;
   CardSelect: boolean;
 }
 
@@ -25,23 +25,19 @@ const PriceBubble = styled('div')({
 
 const Cards: React.FC<MaterialsProps> = ({ name, price, CardSelect }) => {
 
-    const Extention = price >100 ? "BHD":"%";
-  useEffect(() => {
-    console.log("name:", CardSelect);
-  }, [name, CardSelect]);
 
   return (
     <Box sx={{ width: '100%', height: '100%', border: 'none', margin: 0 }}>
       {CardSelect && (
         <Card sx={{ width: '100%', height: '100%', background: '#2977F5', color: 'white', borderRadius: 0, border: 'none', margin: 0 }} className="flex justify-center items-center">
           <span>{name}</span>
-          <PriceBubble>{price + Extention}</PriceBubble>
+          <PriceBubble>{price }</PriceBubble>
         </Card>
       )}
       {!CardSelect && (
         <Card sx={{ width: '100%', height: '100%', borderRadius: 0, border: 'none' }} className="flex justify-center items-center">
           <span>{name}</span>
-          <PriceBubble>{price + Extention}</PriceBubble>
+          <PriceBubble>{price }</PriceBubble>
         </Card>
       )}
     </Box>

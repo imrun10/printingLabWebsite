@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, use } from 'react';
 import * as THREE from 'three';
 import { STLLoader } from 'three/examples/jsm/loaders/STLLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
@@ -7,9 +7,10 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 interface StlFileReaderProps {
   file: File;
   onData: (data: number[]) => void;
+  onSize: (size: number) => void;
 }
 
-export default function StlViewer({ file, onData }: StlFileReaderProps) {
+export default function StlViewer({ file, onData, onSize}: StlFileReaderProps) {
 
   
   const containerRef = useRef<HTMLDivElement>(null);
@@ -26,6 +27,8 @@ export default function StlViewer({ file, onData }: StlFileReaderProps) {
     }
   }, []);
 
+  useEffect(() => {
+    onData(size);},[size])
 
   
   useEffect(() => {
@@ -42,6 +45,7 @@ export default function StlViewer({ file, onData }: StlFileReaderProps) {
           scene.background = new THREE.Color(0xeeeeee); // Change background color to light gray
 
           const mesh = new THREE.Mesh(geometry, material);
+          
           scene.add(mesh);
           meshRef.current = mesh;
 
@@ -66,6 +70,7 @@ export default function StlViewer({ file, onData }: StlFileReaderProps) {
           const boundingBox = new THREE.Box3().setFromObject(mesh);
           const size2 = boundingBox.getSize(new THREE.Vector3());
           setSize(size2.toArray());
+          console.log("size2", size2.toArray())
           containerRef.current?.appendChild(renderer.domElement);
 
           const axisLength = Math.max(size2.x, size2.y, size2.z) * 2;

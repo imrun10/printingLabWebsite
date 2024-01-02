@@ -13,6 +13,19 @@ export async function fetchMaterials() {
   }
 }
 
+export async function fetchItem(table:string, coloumn:string) {
+  try {
+    const { data, error } = await superbase.from(table).select(coloumn);
+    if (error) {
+      throw new Error(error.message);
+    }
+    return data;
+  } catch (error) {
+    console.log("Error fetching",coloumn, "from", table, error);
+    return [];
+  }
+}
+
 export async function fetchFinish() {
   try {
     const { data, error } = await superbase.from("Finish").select("*");

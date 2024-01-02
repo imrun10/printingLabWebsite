@@ -1,8 +1,10 @@
 import exp from "constants";
 
 export interface Material {
+  id : number;
   Name: string;
   Price: number;
+  Density: number;
 }
 
 export interface Finish {
@@ -15,7 +17,7 @@ export interface StlFileReaderProps {
   onData: (data: number[]) => void;
 }
 export interface Purchase {
-  stlFile: File;
+  Weight: number;
   Price: number;
   Color: string;
   SizeXYZ: number[];

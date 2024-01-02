@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import Modal from './paymentPopUp';
 import PayPalButtonComponent from './Paypal';
 import GfgDatePicker from '../calender';
-import '../animation.css';
-import './calender.css';
+import '../componentsCSS/animation.css';
+import '../componentsCSS/calender.css';
 
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 type ValuePiece = Date | null;

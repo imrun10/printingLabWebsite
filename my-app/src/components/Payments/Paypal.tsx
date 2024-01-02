@@ -1,5 +1,5 @@
 import React from 'react';
-import { PayPalButton } from 'react-paypal-button-v2';
+import { PayPalButton } from "react-paypal-button-v3/src/index"
 
 interface PayPalButtonProps {
   amount: number;

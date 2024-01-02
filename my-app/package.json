@@ -20,9 +20,12 @@
     "@types/react": "18.2.18",
     "@types/react-dom": "18.2.7",
     "axios": "^1.6.3",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.0",
     "date-selector-react": "^1.2.6",
     "eslint": "8.46.0",
     "eslint-config-next": "13.4.12",
+    "lucide-react": "^0.303.0",
     "next": "^13.5.6",
     "nextjs-tui-date-picker": "^2.1.0",
     "pico": "^0.1.17",
@@ -30,12 +33,13 @@
     "react-date-picker": "^10.5.2",
     "react-datepicker": "^4.21.0",
     "react-dom": "^18.2.0",
-    "react-paypal-button-v2": "^2.6.3",
+    "react-paypal-button-v3": "^3.0.2",
     "react-pick-color": "^2.0.0",
     "react-spring": "^9.7.3",
     "react-stl-viewer": "^2.3.0",
     "react-three-fiber": "^6.0.13",
-    "tailwind-merge": "^2.0.0",
+    "tailwind-merge": "^2.2.0",
+    "tailwindcss-animate": "^1.0.7",
     "three": "^0.157.0",
     "three-orbit-controls": "^82.1.0",
     "three-stdlib": "^2.27.0",
@@ -46,7 +50,7 @@
     "@types/react-datepicker": "^4.19.3",
     "@types/three": "^0.156.0",
     "autoprefixer": "^10.4.16",
-    "postcss": "^8.4.31",
-    "tailwindcss": "^3.3.3"
+    "postcss": "^8.4.32",
+    "tailwindcss": "^3.4.0"
   }
 }
