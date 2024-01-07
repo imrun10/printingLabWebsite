@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from '../../components/Header';
+import Footer from '@/components/footer';
 
 
 export default function layout({
@@ -17,7 +18,7 @@ export default function layout({
             </main>
 
             {/* Footer */}
-         
+       
         </div>
     );
 };

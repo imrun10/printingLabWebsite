@@ -7,17 +7,30 @@ import ColorPicker from 'react-pick-color';
 import { useRouter } from "next/navigation";
 import { Material, Finish, Purchase} from "../../utils/constructs";
 import { fetchMaterials, fetchFinish,fetchItem } from "../../api/database/fetch";
-
 import Cards from "../Card";
 import Link from "next/link";
 import { weightCosts } from "@/utils/calcs";
+import StlValidation from "./ValidateStl";
+import { sendEmailwAttachment } from "../sendEmai";
+import { send } from "process";
 
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 type ValuePiece = Date | null;
 
 
+interface BookingFormProps {
+  onFinish: (done: boolean) => void;
+  onFile: (file: File) => void;
+  onPrice: (price: number) => void;
+  onFinishing: (finishing: string) => void;
+  onColor: (color: string) => void;
+  onMaterial: (material: string) => void;
+  onSize: (size: number[]) => void;
+  onWeight: (weight: number) => void;
 
-export default function CardLayout() {
+}
+
+export default function CardLayout({ onFinish, onFile, onPrice, onFinishing, onColor, onMaterial, onSize, onWeight }: BookingFormProps) {
   const [materials, setMaterials] = useState<Material[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -32,8 +45,20 @@ export default function CardLayout() {
   const [done, setDone] = useState<boolean>(false);
   const [size, setSize] = useState<number[]>([0,0,0]);
   const [volume, setVolume] = useState<number>(0);
- 
+  const [check, setCheck] = useState<string>("");
+  const [stingFile, setStringFile] = useState<string>("");
+  const [buffer, setBuffer] = useState<Buffer | null>(null);
 
+ 
+  function complete() {
+    onFinish(true);
+    onFile(selectedFile!);
+    onPrice(price);
+    onFinishing(selectedFinish);
+    onColor(color);
+    onMaterial(selectedMaterial);
+    onSize(size);
+    onWeight(volume*0.001);}
   
 
     useEffect(() => {
@@ -111,40 +136,8 @@ useEffect(() => {
   fetchData();
 }, [selectedMaterial, selectedFinish]);
 
-  //useEffect(() => {
- //   console.log("Material:", selectedMaterial);
- // }, [selectedMaterial]);
 
-  useEffect(() => {
-    const validateFile = async () => {
-      console.log("Validating file...");
-      if (selectedFile) {
-          setValidationResult("Valid STL");  
-    };
-
-    validateFile();
-  }}, [selectedFile]);
-
-  
-  function validateSTLFile(selectedFile: File) {
-    return new Promise<void>((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = function () {
-        const arrayBuffer = reader.result as ArrayBuffer;
-        const loader = new STLLoader();
-        try {
-          loader.parse(arrayBuffer);
-          resolve();
-        } catch (error) {
-          reject(new Error("Invalid STL file"));
-        }
-      };
-      reader.onerror = function () {
-        reject(new Error("Failed to read file"));
-      };
-      reader.readAsArrayBuffer(selectedFile);
-    });
-  }
+//||\\//||\\//||\\//||\\
   const router = useRouter();
 
   function updatePrice(cost:number) {
@@ -152,6 +145,21 @@ useEffect(() => {
     console.log("price", price)
   }
     
+  async function bufferize(file: File) {
+    try {
+      const arrayBuffer = await file.arrayBuffer();
+      const buffert = Buffer.from(arrayBuffer);
+      console.log("PREBuffer:", buffert);
+      const content = buffert.toString('base64')
+
+  
+      setBuffer(buffert);
+      sendEmailwAttachment(JSON.stringify(purchase), content)
+    } catch (error) {
+      console.error("Error buffering file:", error);
+      setBuffer(null); // Or handle the error as appropriate
+    }
+  }
 
   useEffect(() => { 
     if(selectedFile){
@@ -184,7 +192,10 @@ useEffect(() => {
       purchase.SizeXYZ = size
       purchase.Service = ""
       purchase.Weight = size[0]*size[1]*size[2]*0.000001
+      bufferize(selectedFile!);
+
       
+      complete();
 
       setDone(true)
 
@@ -196,11 +207,33 @@ useEffect(() => {
     function calc(price: number, density: number) {
       return price*volume*density*0.001;
     }
+// Function to convert file to string
+async function fileToString(file: File): Promise<string> {
+  return new Promise<string>((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => resolve(reader.result as string);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+useEffect(() => {
+  const convertFileToString = async () => {
+    const fileString = await fileToString(selectedFile!);
+    setStringFile(fileString);
+  };
+
+  if (selectedFile) {
+    convertFileToString();
+  }
+}, [selectedFile]);
+
+
+
   return (
     <div className="grid-rows-2 gap-0">
           <div className="h-96 grid grid-cols-4 gap-0 flex-1">
       <div className="container display item-shadow col-span-3 flex flex-col">
-        {tab === 1 && selectedFile && <StlViewer file={selectedFile} onData={setSize} onSize={setVolume}/>}
+        {tab === 1 && selectedFile && <StlViewer file={selectedFile} onData={setSize} onSize={setVolume} onCheck={setCheck}/>}
         {tab === 2 &&
           materials.map((material) => {
             return (
@@ -217,11 +250,12 @@ useEffect(() => {
               </div>
             );
           })}
-        {tab === 4 && (
+        {tab === 4 && (<div>
           <ColorPicker
             color={color}
             onChange={(color) => setColor(color.hex)}
           />
+          <StlViewer file={selectedFile!} onData={setSize} onSize={setVolume} onCheck={setCheck}/> </div>
         )}
       </div>
 
@@ -266,19 +300,12 @@ useEffect(() => {
         
         <div className="col-span-1 pb-0 mb-0 ">
           {
-            color!="" && tab==4? <Link href={{pathname:"/dev/payment", query: {
-              price: price,
-              color: color,
-              finish: selectedFinish,
-              size: size,
-              material: selectedMaterial,
-            
-            }}}><div
+            color!="" && tab==4? <button ><div
             className="item-shadow bg-green-500 text-white font-sans pb-6 font-medium flex items-center justify-center text-center text-lg hover:bg-green-600 hover:opacity-75 hover:transition-opacity duration-300"
             onClick={handleNext}
           >
             Done
-          </div></Link>: <div
+          </div></button>: <div
               className="item-shadow bg-blue-800 text-white font-sans pb-6 font-medium flex items-center justify-center text-center text-lg hover:opacity-75 hover:transition-opacity duration-300"
               onClick={handleNext}
             >
@@ -292,8 +319,9 @@ useEffect(() => {
   
         <div>
           {tab==1 && <StlFileReader onChange={setSelectedFile} />}
-          {tab==1 && selectedFile && <p className="m-0 p-0">{validationResult}</p>}
+          {tab==1 && selectedFile && <StlValidation file={selectedFile}/>}
         </div>
+
       </div>
       
     

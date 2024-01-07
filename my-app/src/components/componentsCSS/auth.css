@@ -1,0 +1,17 @@
+container: {
+    display: 'flex';
+    justifyContent: 'center';
+    alignItems: 'center';
+    height: '100vh';
+  },
+  form: {
+    display: 'flex';
+    flexDirection: 'column';
+    gap: theme.spacing(2);
+  },
+  title: {
+    marginBottom: theme.spacing(4);
+  },
+  submitButton: {
+    marginTop: theme.spacing(2);
+  }

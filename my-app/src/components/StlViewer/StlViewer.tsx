@@ -1,5 +1,4 @@
-'use client';
-import React, { useState, useEffect, useRef, use } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { STLLoader } from 'three/examples/jsm/loaders/STLLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
@@ -8,11 +7,10 @@ interface StlFileReaderProps {
   file: File;
   onData: (data: number[]) => void;
   onSize: (size: number) => void;
+  onCheck: (check: string) => void;
 }
 
-export default function StlViewer({ file, onData, onSize}: StlFileReaderProps) {
-
-  
+export default function StlViewer({ file, onData, onSize, onCheck }: StlFileReaderProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const meshRef = useRef<THREE.Mesh | null>(null);
   const [width, setWidth] = useState<number>(0);
@@ -28,9 +26,9 @@ export default function StlViewer({ file, onData, onSize}: StlFileReaderProps) {
   }, []);
 
   useEffect(() => {
-    onData(size);},[size])
+    onData(size);
+  }, [size]);
 
-  
   useEffect(() => {
     if (file) {
       const reader = new FileReader();
@@ -41,41 +39,50 @@ export default function StlViewer({ file, onData, onSize}: StlFileReaderProps) {
 
           const loader = new STLLoader();
           const geometry = loader.parse(data);
-          const material = new THREE.MeshPhongMaterial({ color: 0x888888 }); // Change material to MeshPhongMaterial for better lighting and shadows
-          scene.background = new THREE.Color(0xeeeeee); // Change background color to light gray
+          const material = new THREE.MeshPhongMaterial({ color: 0xcccccc, specular: 0x555555, shininess: 30 });
+          scene.background = new THREE.Color(0xffffff);
 
           const mesh = new THREE.Mesh(geometry, material);
-          
           scene.add(mesh);
           meshRef.current = mesh;
 
           geometry.center();
 
           const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 10000);
-          camera.position.z = 500; // Zoom out by setting a higher value
+          camera.position.z = 500;
 
           const renderer = new THREE.WebGLRenderer({ antialias: true });
           renderer.setSize(width, height);
-          renderer.shadowMap.enabled = true; // Enable shadows in the renderer
+          renderer.shadowMap.enabled = true;
 
-          const light = new THREE.DirectionalLight(0xffffff, 100);
+          const light = new THREE.DirectionalLight(0xffffff, 1);
           light.position.set(1, 1, 1);
           scene.add(light);
+
+          const ambientLight = new THREE.AmbientLight(0x404040);
+          scene.add(ambientLight);
 
           const controls = new OrbitControls(camera, renderer.domElement);
           controls.enableDamping = true;
           controls.dampingFactor = 0.05;
-          renderer.shadowMap.enabled = true; // Enable shadows in the renderer
 
-          const boundingBox = new THREE.Box3().setFromObject(mesh);
-          const size2 = boundingBox.getSize(new THREE.Vector3());
-          setSize(size2.toArray());
-          console.log("size2", size2.toArray())
           containerRef.current?.appendChild(renderer.domElement);
 
-          const axisLength = Math.max(size2.x, size2.y, size2.z) * 2;
-          const axisHelper = new THREE.AxesHelper(axisLength);
-          scene.add(axisHelper);
+          const boundingBox = new THREE.Box3().setFromObject(mesh);
+          const objectSize = boundingBox.getSize(new THREE.Vector3());
+          setSize(objectSize.toArray());
+
+          // Add floor
+          const floorGeometry = new THREE.PlaneGeometry(objectSize.x * 2, objectSize.y * 2, 1, 1);
+          const floorMaterial = new THREE.MeshPhongMaterial({ color: 0xdddddd, transparent: true, opacity: 0.3, side: THREE.DoubleSide, shadowSide: THREE.BackSide });
+          const floor = new THREE.Mesh(floorGeometry, floorMaterial);
+          floor.rotation.x = -Math.PI / 2;
+          floor.position.y = -objectSize.y / 2 - 1; // Place the floor slightly below the object
+          floor.receiveShadow = true;
+          scene.add(floor);
+
+          mesh.castShadow = true;
+          mesh.receiveShadow = true;
 
           const renderScene = () => {
             renderer.setSize(width, height);
