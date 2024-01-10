@@ -32,3 +32,13 @@ export interface Value {
 export interface ValuePiece {
   Date: Date | null;
 }
+
+export interface User {
+  name: string;
+      lastName: string;
+      address: string;
+      mobileNumber: string;
+      city: string;
+      Organization: string;
+      zip: string;
+      country: string;};

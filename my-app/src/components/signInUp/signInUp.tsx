@@ -144,9 +144,22 @@ export default function SignUp() {
                 fullWidth
                 className='mb-4'
               >
+
+
+
+
+
+
+                
                 <MenuItem value="home">Home</MenuItem>
+
+
                 <MenuItem value="apartment">Apartment</MenuItem>
+
+
               </Select>
+
+
               {residenceType === 'apartment' && (
                 <TextField
                   type="text"

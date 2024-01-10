@@ -192,7 +192,6 @@ useEffect(() => {
       purchase.SizeXYZ = size
       purchase.Service = ""
       purchase.Weight = size[0]*size[1]*size[2]*0.000001
-      bufferize(selectedFile!);
 
       
       complete();

@@ -106,7 +106,7 @@ const UploadPage: React.FC = () => {
                   zip: ".",
                   country: ".",
                 }}
-x              />{" "}
+             />{" "}
             </div>
           )}
         </div>
