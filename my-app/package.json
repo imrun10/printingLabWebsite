@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.17",
+
     "@emotion/cache": "^11.11.0",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
@@ -32,6 +34,7 @@
     "@types/node": "20.4.8",
     "@types/react": "18.2.18",
     "@types/react-dom": "18.2.7",
+    "aos": "^2.3.4",
     "axios": "^1.6.3",
     "buffer": "^6.0.3",
     "bufferutil": "^4.0.8",
@@ -69,6 +72,7 @@
   },
   "devDependencies": {
     "@types/nodemailer": "^6.4.14",
+    "@types/aos": "^3.0.7",
     "@types/paypal__checkout-server-sdk": "^1.0.8",
     "@types/react-datepicker": "^4.19.3",
     "@types/three": "^0.156.0",

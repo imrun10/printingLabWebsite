@@ -15,6 +15,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useEffect } from 'react';
 import { fetchUser } from '@/api/database/fetch';
 import  supabase  from '@/database/superbase'; // Assuming you have a supabase.js file with supabase client configuration
+import Header from '@/components/Header';
 
 export default function SignIn() {
   const router = useRouter();
@@ -60,6 +61,8 @@ export default function SignIn() {
     }}
 
   return (
+    <div>      <Header />
+ 
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <Box
@@ -70,7 +73,7 @@ export default function SignIn() {
           alignItems: 'center',
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}></Avatar>
+        <Avatar sx={{ m: 1, }}></Avatar>
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
@@ -99,7 +102,7 @@ export default function SignIn() {
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           />
-          <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+          <Button type="submit" fullWidth variant="contained" className=" bg-slate-700"sx={{ mt: 3, mb: 2 }}>
             Sign In
           </Button>
           <Grid container>
@@ -109,7 +112,7 @@ export default function SignIn() {
               </Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="/signup" variant="body2">
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>
@@ -117,5 +120,6 @@ export default function SignIn() {
         </Box>
       </Box>
     </Container>
+    </div>
   );
 }

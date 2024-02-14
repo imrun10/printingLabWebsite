@@ -26,8 +26,11 @@ export async function fetchItem(table:string, coloumn:string) {
   }
 }
 
+
+
 export async function fetchUser() {
   const { data: { session }, } = await superbase.auth.getSession()
+  console.log(session)
 
   return session;
 }

@@ -41,3 +41,15 @@ ul {
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
   padding: 16px;
 }
+.tabBackground {
+  background: 'url("/Wavy_Bus-10_Single-03.jpg")';
+  backgroundSize: 'cover';
+  backgroundPosition: 'center';
+  opacity: '0.6';
+}
+.getQuotationButton {
+  position: 'absolute';
+  top: '50%';
+  left: '50%';
+  transform: 'translate(-50%, -50%)';
+}

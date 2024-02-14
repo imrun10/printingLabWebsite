@@ -11,7 +11,7 @@ import Cards from "../Card";
 import Link from "next/link";
 import { weightCosts } from "@/utils/calcs";
 import StlValidation from "./ValidateStl";
-import { sendEmailwAttachment } from "../sendEmai";
+import { sendEmailwAttachment } from "../../utils/sendEmai";
 import { send } from "process";
 
 type Value = ValuePiece | [ValuePiece, ValuePiece];
