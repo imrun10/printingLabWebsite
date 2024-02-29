@@ -6,14 +6,17 @@ import "tailwindcss/tailwind.css";
 import CardWrapper from "@/components/StlViewer/StlViewLayout";
 import { fetchUser } from "@/api/database/fetch";
 import BookingForm from "@/components/Payments/BookingForm";
-import "@/app/dev/background.css";
+import "@/app/upload/background.css";
 import Checkout from "@/components/paymentT/Checkout";
+
 interface Purchase {
   stlFile: File;
   Price: number;
   Color: string;
   SizeXYZ: number[];
 }
+
+
 const UploadPage: React.FC = () => {
   const [done, setDone] = useState<boolean>(false);
   const [price, setPrice] = useState<number>(0);

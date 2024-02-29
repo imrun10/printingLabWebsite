@@ -5,17 +5,9 @@ import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { fetchUser } from '@/api/database/fetch';
+import useCustomer from '@/hooks/hooks';
 
-async function getUserInfo() {
-  const session = await fetchUser();
-  if (session) {
-    console.log("Signed in already", session);
-    const information = session.user.user_metadata;
-    return {... information, };
-  } else {
-    console.log("Not signed in");
-  }
-}
+
 
 interface AddressFormProps {
   userInfo: {
@@ -48,6 +40,8 @@ export default function AddressForm({ userInfo, update }: AddressFormProps) {
     update({...userInfo,name: value });
   };
 
+  const user = useCustomer(); // This is the custom hook that you created
+  
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>

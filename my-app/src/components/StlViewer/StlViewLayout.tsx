@@ -215,6 +215,8 @@ async function fileToString(file: File): Promise<string> {
     reader.readAsDataURL(file);
   });
 }
+
+const colors = ["Black","white","Grey","Brown"]
 useEffect(() => {
   const convertFileToString = async () => {
     const fileString = await fileToString(selectedFile!);
@@ -249,13 +251,15 @@ useEffect(() => {
               </div>
             );
           })}
-        {tab === 4 && (<div>
-          <ColorPicker
-            color={color}
-            onChange={(color) => setColor(color.hex)}
-          />
-          <StlViewer file={selectedFile!} onData={setSize} onSize={setVolume} onCheck={setCheck}/> </div>
-        )}
+        {tab === 4 && (
+          colors.map((col) => {
+            return (
+              <div key={col} onClick={() => setColor(col)} className="flex-auto h-full">
+                <Cards name={col} price="0" CardSelect={col === color} />
+              </div>
+            );
+          }
+        ))}
       </div>
 
         <div className="grid grid-rows-4 grid-flow-col gap-0">
@@ -298,27 +302,35 @@ useEffect(() => {
       <div className="row-span-1 grid-cols-4">
         
         <div className="col-span-1 pb-0 mb-0 ">
-          {
-            color!="" && tab==4? <button ><div
-            className="item-shadow bg-green-500 text-white font-sans pb-6 font-medium flex items-center justify-center text-center text-lg hover:bg-green-600 hover:opacity-75 hover:transition-opacity duration-300"
-            onClick={handleNext}
-          >
-            Done
-          </div></button>: <div
-              className="item-shadow bg-blue-800 text-white font-sans pb-6 font-medium flex items-center justify-center text-center text-lg hover:opacity-75 hover:transition-opacity duration-300"
-              onClick={handleNext}
-            >
-              Next
-            </div>
-        }
+        <div className="button-container" style={{ display: 'flex' }}>
+        {
+  color !== '' && tab === 4 ? (
+    <button>
+      <div
+        className="item-shadow bg-green-500 text-white font-sans font-medium flex items-center justify-center text-center text-lg hover:bg-green-600 hover:opacity-75 hover:transition-opacity duration-300"
+        style={{ width: '100%', maxWidth: '100px' }} // Adjust the maxWidth as needed
+        onClick={handleNext}
+      >
+        Done
+      </div>
+    </button>
+  ) : (
+    <div
+      className="item-shadow bg-blue-800 text-white font-sans h-full font-medium flex items-center justify-center text-center text-lg hover:opacity-75 hover:transition-opacity duration-300"
+      onClick={handleNext}
+    >
+      Next
+    </div>
+  )
+}
+</div>
         </div>
         <div className="fixed bottom-4 right-4 bg-gray-800 text-white p-4 rounded-lg shadow-lg text-xl">
       Total: {price.toFixed(2)} BHD
     </div>
   
-        <div>
+        <div className=" h-8 pt-1">
           {tab==1 && <StlFileReader onChange={setSelectedFile} />}
-          {tab==1 && selectedFile && <StlValidation file={selectedFile}/>}
         </div>
 
       </div>

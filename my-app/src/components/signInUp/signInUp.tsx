@@ -10,7 +10,8 @@ import CardContent from '@mui/material/CardContent';
 import Link from 'next/link';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
-
+import Header from '@/components/Header';
+import { saveUser } from '@/api/database/save';
 export default function SignUp() {
   const router = useRouter();
   const [email, setEmail] = useState('');
@@ -26,27 +27,34 @@ export default function SignUp() {
   const handleSignUp = async (e:any) => {
     e.preventDefault();
 
-    const { data, error } = await supabase.auth.signUp({
-      email: email,
-      password: password,
-    }).then(() => {
-    });
-    if (error) {
-      console.error('Error signing up:', error.message);
-    } else {
-      console.log('Signed up successfully');
-      router.push('/');
-    }
-  };
+     // Check for empty fields
+  
+
+  const { data, error } = await supabase.auth.signUp({
+    email: email,
+    password: password,
+  });
+
+  if (error) {
+    console.error('Error signing up:', error.message);
+  } else {
+    saveUser({id:data.user?.id, Fname:Fname, Lname:Lname, org:org, address:address, address2:address2, zip:zip, mobileNumber:mobileNumber, email:email})
+    console.log('Signed up successfully');
+    console.log(data.user!.id)
+    router.push('/login');
+  }
+};
 
   return (
+    <div>
+      <Header />
+    <div className='pt-1 pb-32 '>
     <Container
       className="container"
       style={{
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        height: '100vh',
       }}
     >
       <Box
@@ -66,6 +74,7 @@ export default function SignUp() {
               <Typography variant="h5" component="h1" align="center" gutterBottom>
                 Sign Up
               </Typography>
+              <div className='flex horizontal gap-5'>
               <TextField
                 type="text"
                 label="First Name"
@@ -84,6 +93,7 @@ export default function SignUp() {
                 fullWidth
                 margin="normal"
               />
+              </div>
               <TextField
                 type="email"
                 label="Email"
@@ -102,15 +112,7 @@ export default function SignUp() {
                 fullWidth
                 margin="normal"
               />
-              <TextField
-                type="text"
-                label="Organization/University"
-                value={org}
-                onChange={(e) => setOrg(e.target.value)}
-                required
-                fullWidth
-                margin="normal"
-              />
+              
               <TextField
                 type="text"
                 label="Mobile Number"
@@ -137,6 +139,16 @@ export default function SignUp() {
                 fullWidth
                 margin="normal"
               />
+              <div className='flex horizontal gap-5'>
+              <TextField
+                type="text"
+                label="Organization/University"
+                value={org}
+                onChange={(e) => setOrg(e.target.value)}
+                required
+                fullWidth
+                margin="normal"
+              />
               <TextField
                 type="text"
                 label="Zip"
@@ -146,7 +158,7 @@ export default function SignUp() {
                 fullWidth
                 margin="normal"
               />
-              
+              </div>
               <Button
                 type="submit"
                 variant="contained"
@@ -164,5 +176,8 @@ export default function SignUp() {
         </Card>
       </Box>
     </Container>
+    </div>
+    </div>
+
   );
 }

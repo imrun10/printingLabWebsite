@@ -17,6 +17,7 @@ import { fetchUser } from '@/api/database/fetch';
 import  supabase  from '@/database/superbase'; // Assuming you have a supabase.js file with supabase client configuration
 import Header from '@/components/Header';
 
+
 export default function SignIn() {
   const router = useRouter();
 

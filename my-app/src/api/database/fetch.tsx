@@ -26,10 +26,26 @@ export async function fetchItem(table:string, coloumn:string) {
   }
 }
 
-
+export async function fetchCuctomer() {
+  fetchUser().then((user) => {
+    try {
+      const { data, error } = superbase.from("Customer").select("*").eq("UserID", user!.user.id);
+      if (error) {
+        console.log("Error fetching customer:", error);
+      }
+      return data;
+    } catch (error) {
+      console.log("Error fetching customer:", error);
+      return [];
+    }
+  })}
 
 export async function fetchUser() {
-  const { data: { session }, } = await superbase.auth.getSession()
+  const { data: { session }, error } = await superbase.auth.getSession()
+  if (error) {
+    console.log("Error fetching user:", error);
+    return error;
+  }
   console.log(session)
 
   return session;

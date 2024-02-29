@@ -31,13 +31,11 @@ const Cards: React.FC<MaterialsProps> = ({ name, price, CardSelect }) => {
       {CardSelect && (
         <Card sx={{ width: '100%', height: '100%', background: '#2977F5', color: 'white', borderRadius: 0, border: 'none', margin: 0 }} className="flex justify-center items-center">
           <span>{name}</span>
-          <PriceBubble>{price }</PriceBubble>
         </Card>
       )}
       {!CardSelect && (
         <Card sx={{ width: '100%', height: '100%', borderRadius: 0, border: 'none' }} className="flex justify-center items-center">
           <span>{name}</span>
-          <PriceBubble>{price }</PriceBubble>
         </Card>
       )}
     </Box>
