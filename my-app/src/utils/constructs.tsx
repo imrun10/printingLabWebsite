@@ -19,6 +19,9 @@ export interface customer {
   Email: string;
 
 }
+export interface card{
+  
+}
 export interface Finish {
   Name: string;
   Percentage: number;
