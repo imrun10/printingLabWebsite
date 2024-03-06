@@ -25,6 +25,7 @@ export default function Contact() {
     return (
         <div className="pt-10 pb-24">  
             <div className="max-w-md mx-auto">
+                <h2 className="text-2xl font-bold text-center mb-4">Contact Us</h2>
                 <form className="space-y-4" onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                     e.preventDefault();
                     const form = e.currentTarget;
