@@ -8,7 +8,8 @@ export interface Material {
 }
 
 export interface customer {
-  UserId: string;
+  UserID: string;
+  created_at: string;
   Fname: string;
   Lname: string;
   Org: string;
@@ -19,8 +20,22 @@ export interface customer {
   Email: string;
 
 }
-export interface card{
-  
+
+
+export interface purchase{
+  id: string;
+  created_at: string;
+  STL: any;
+  Price: number;
+  Progress: string;
+  Paid: boolean;
+  Material: string;
+  Finish: String;
+  Weight: number;
+  Email: string;
+  Customer: string;
+  Count: number;
+  color: string;
 }
 export interface Finish {
   Name: string;
@@ -30,14 +45,6 @@ export interface Finish {
 export interface StlFileReaderProps {
   file: File;
   onData: (data: number[]) => void;
-}
-export interface Purchase {
-  Weight: number;
-  Price: number;
-  Color: string;
-  SizeXYZ: number[];
-  Finish: string;
-  Service: string;
 }
 
 export interface Value {

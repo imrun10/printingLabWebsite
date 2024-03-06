@@ -4,25 +4,32 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Grid from '@mui/material/Grid';
+import { customer,purchase } from '@/utils/constructs';
+import { savePurchase } from '@/api/database/save';
+import { sendEmailwAttachment } from '@/utils/sendEmai';
 
 
 
 interface ReviewProps {
-    address: {
-      name: string;
-      lastName: string;
-      address: string;
-      mobileNumber: string;
-      city: string;
-      Organization: string;
-      zip: string;
-      country: string;};
-    products: {material: string; finishing: string; volume: string; weight: string};
-    price: number;
+    address: customer;
+    purchase: purchase;
+    customer: customer;
     }
 
+async function send(file: string, message: any) {
+  try {
+   
 
-export default function Review({address, products, price}: ReviewProps) {
+    sendEmailwAttachment(JSON.stringify(message), file)
+  } catch (error) {
+    console.error("Error buffering file:", error);
+  }
+}
+
+
+export default function Review({address, purchase,customer}: ReviewProps) {
+  savePurchase(purchase,customer);
+  //csend(purchase.STL, "this is a test message");
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -32,19 +39,17 @@ export default function Review({address, products, price}: ReviewProps) {
 
    
           <ListItem  sx={{ py: 1, px: 0 }}>
-            <ListItemText primary={products.material} />
-            <ListItemText primary={products.finishing} />
+            <ListItemText primary={purchase.Material} />
+            <ListItemText primary={purchase.Finish} />
 
-            <ListItemText primary={products.volume} />
 
-            <ListItemText primary={products.weight} />
 
           </ListItem>
         
         <ListItem sx={{ py: 1, px: 0 }}>
           <ListItemText primary="Total" />
           <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-        {price}
+        {purchase.Price}
           </Typography>
         </ListItem>
       </List>
@@ -53,8 +58,8 @@ export default function Review({address, products, price}: ReviewProps) {
           <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
             Shipping
           </Typography>
-          <Typography gutterBottom>{address.name}</Typography>
-          <Typography gutterBottom>{address.address}</Typography>
+          <Typography gutterBottom>{customer.Fname}</Typography>
+          <Typography gutterBottom>{}</Typography>
         </Grid>
         <Grid item container direction="column" xs={12} sm={6}>
           <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>

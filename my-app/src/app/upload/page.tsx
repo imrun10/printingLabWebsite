@@ -3,11 +3,13 @@ import React, { useState, createContext, use, useEffect } from "react";
 
 import Header from "@/components/Header";
 import "tailwindcss/tailwind.css";
-import CardWrapper from "@/components/StlViewer/StlViewLayout";
-import { fetchUser } from "@/api/database/fetch";
+import CardLayout from "@/components/StlViewer/StlViewLayout";
+import { fetchCustomer, fetchUser } from "@/api/database/fetch";
 import BookingForm from "@/components/Payments/BookingForm";
 import "@/app/upload/background.css";
 import Checkout from "@/components/paymentT/Checkout";
+import { customer } from "@/utils/constructs";
+import { purchase } from "@/utils/constructs";
 
 interface Purchase {
   stlFile: File;
@@ -28,25 +30,29 @@ const UploadPage: React.FC = () => {
   const [size, setSize] = useState<number[]>([0, 0, 0]);
   const [finishing, setFinishing] = useState<string | null>(null);
   const [success, setSuccess] = useState<boolean>(false);
+  const [customer, setCustomer] = useState<customer | null>(null);
+  const [purchase, setPurchase] = useState<purchase | null>(null);
 
   useEffect(() => {
-    const checkUser = async () => {
-      const user = await fetchUser();
-      if (user) {
-        console.log("Signed in already", user);
-      } else {
-        console.log("Not signed in");
+      fetchUser()
+      .then((user) => {
+        if (user) {
+          console.log("Signed in already", user.user.id);
+          fetchCustomer(user.user.id)
+          .then((data) => {setCustomer(data[0]!)}).catch((error) => {console.log(error)});
+        } else {
+          console.log("Not signed in");
+        }
+      }) .catch((error) => console.log("Error fetching materials:", error))
+      .finally(() => setDone(false));}, []);
+
+  
+      useEffect(() => {
+        console.log(customer, "customer");
       }
-      console.log(done);
-    };
+      , [customer]);
 
-    checkUser();
-  }, []);
 
-  useEffect(() => {
-    console.log(materials,"materials")
-    }
-  , [materials]);
 
   //reload page when done is changed
 
@@ -74,15 +80,9 @@ const UploadPage: React.FC = () => {
           }}
         >
           {!done ? (
-            <CardWrapper
-              onFinish={setDone}
-              onColor={setColor}
-              onFile={setStlFile}
-              onWeight={setWeight}
-              onPrice={setPrice}
-              onMaterial={setMaterial}
-              onFinishing={setFinishing}
-              onSize={setSize}
+            <CardLayout
+              onPurchase={setPurchase}
+              onDone={setDone}
             />
           ) : (
             <div>
@@ -90,25 +90,9 @@ const UploadPage: React.FC = () => {
               <Checkout
                               onSuccess={setSuccess}
                               onReturn={setDone}
-                              price={price}
+                              purchase={purchase!}
+                              customer={customer!}
 
-
-                products={{
-                  material: materials!,
-                  finishing: finishing!,
-                  volume: volume?.toString()!,
-                  weight: weight?.toString()!,
-                }}
-                userInfo={{
-                  name: ".",
-                  lastName: ".",
-                  address: ".",
-                  mobileNumber: ".",
-                  city: ".",
-                  Organization: ".",
-                  zip: ".",
-                  country: ".",
-                }}
              />{" "}
             </div>
           )}

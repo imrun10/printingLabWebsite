@@ -14,6 +14,7 @@ import Typography from "@mui/material/Typography";
 import AddressForm from "./AddressForm";
 import PaymentForm from "./PaymentForm";
 import Review from "./Review";
+import { purchase,customer } from "@/utils/constructs";
 
 function Copyright() {
   return (
@@ -30,45 +31,15 @@ function Copyright() {
 
 const steps = ["Shipping address", "Payment details", "Review your order"];
 
-function getStepContent(
-  products: {
-    material: string;
-    finishing: string;
-    volume: string;
-    weight: string;
-  },
-  price: number,
-  step: number,
-  userInfo: {
-    name: string;
-    lastName: string;
-    address: string;
-    mobileNumber: string;
-    city: string;
-    Organization: string;
-    zip: string;
-    country: string;
-  }
-) {
-  function updateUserinfo(updatedUserInfo: {
-    name: string;
-    lastName: string;
-    address: string;
-    mobileNumber: string;
-    city: string;
-    Organization: string;
-    zip: string;
-    country: string;
-  }) {
-    userInfo = updatedUserInfo;
-  }
+function useGetStepContent(step:number,purchase:purchase,customer:customer) {
+  const [address, setAddress] = React.useState<customer>(customer);
   switch (step) {
     case 0:
-      return <AddressForm userInfo={userInfo} update={updateUserinfo} />;
+      return <AddressForm userInfo={customer} onAddress={setAddress} />;
     case 1:
       return <PaymentForm />;
     case 2:
-      return <Review address={userInfo} products={products} price={price} />;
+      return <Review address={address} purchase={purchase} customer={customer}/>;
     default:
       throw new Error("Unknown step");
   }
@@ -76,29 +47,16 @@ function getStepContent(
 interface CheckoutProps {
   onSuccess: (success: boolean) => void;
   onReturn: (done: boolean) => void;
-  price: number;
-  products: {
-    material: string;
-    finishing: string;
-    volume: string;
-    weight: string;
-  };
-  userInfo: {
-    name: string;
-    lastName: string;
-    address: string;
-    mobileNumber: string;
-    city: string;
-    Organization: string;
-    zip: string;
-    country: string;
-  };
+  purchase: purchase;
+  customer: customer;
 }
 export default function Checkout(
-  { onSuccess, onReturn, price, products, userInfo }: CheckoutProps
+  { onSuccess, onReturn, purchase, customer}: CheckoutProps
 ) {
+  React.useEffect(() => {
+    console.log(customer, "customer2");
+  } , []);
   const [activeStep, setActiveStep] = React.useState(0);
-  console.log(products.material,"jksdfnsdfkj")
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -154,7 +112,7 @@ export default function Checkout(
             </React.Fragment>
           ) : (
             <React.Fragment>
-              {getStepContent(products, price, activeStep, userInfo)}
+              {useGetStepContent(activeStep,purchase,customer)}
               <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
                 {activeStep !== 0 && (
                   <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>

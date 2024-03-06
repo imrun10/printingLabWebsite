@@ -6,41 +6,17 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { fetchUser } from '@/api/database/fetch';
 import useCustomer from '@/hooks/hooks';
+import { customer } from '@/utils/constructs';
 
 
 
 interface AddressFormProps {
-  userInfo: {
-    name: string;
-    lastName: string;
-    address: string;
-    mobileNumber: string;
-    city: string;
-    Organization: string;
-    zip: string;
-    country: string;
-  };
-  update: (updatedUserInfo: {
-    name: string;
-    lastName: string;
-    address: string;
-    mobileNumber: string;
-    city: string;
-    Organization: string;
-    zip: string;
-    country: string;
-
-  
-  }) => void; // Update the type to match your desired prop type
+  userInfo: customer;
+  onAddress: (address:customer) => void;
 }
 
-export default function AddressForm({ userInfo, update }: AddressFormProps) {
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    update({...userInfo,name: value });
-  };
-
-  const user = useCustomer(); // This is the custom hook that you created
+export default function AddressForm({ userInfo, onAddress }: AddressFormProps) {
+  
 
   
   return (
@@ -58,7 +34,6 @@ export default function AddressForm({ userInfo, update }: AddressFormProps) {
             fullWidth
             autoComplete="given-name"
             variant="standard"
-            onChange={handleInputChange}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -70,7 +45,6 @@ export default function AddressForm({ userInfo, update }: AddressFormProps) {
             fullWidth
             autoComplete="family-name"
             variant="standard"
-            onChange={handleInputChange}
           />
         </Grid>
         <Grid item xs={12}>
@@ -82,7 +56,6 @@ export default function AddressForm({ userInfo, update }: AddressFormProps) {
             fullWidth
             autoComplete="shipping address-line1"
             variant="standard"
-            onChange={handleInputChange}
           />
         </Grid>
         <Grid item xs={12}>
@@ -93,7 +66,6 @@ export default function AddressForm({ userInfo, update }: AddressFormProps) {
             fullWidth
             autoComplete="shipping address-line2"
             variant="standard"
-            onChange={handleInputChange}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -105,7 +77,6 @@ export default function AddressForm({ userInfo, update }: AddressFormProps) {
             fullWidth
             autoComplete="shipping address-level2"
             variant="standard"
-            onChange={handleInputChange}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -115,7 +86,6 @@ export default function AddressForm({ userInfo, update }: AddressFormProps) {
             label="Organisation/University"
             fullWidth
             variant="standard"
-            onChange={handleInputChange}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -127,7 +97,6 @@ export default function AddressForm({ userInfo, update }: AddressFormProps) {
             fullWidth
             autoComplete="shipping postal-code"
             variant="standard"
-            onChange={handleInputChange}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -139,7 +108,6 @@ export default function AddressForm({ userInfo, update }: AddressFormProps) {
             fullWidth
             autoComplete="shipping country"
             variant="standard"
-            onChange={handleInputChange}
           />
         </Grid>
         <Grid item xs={12}>

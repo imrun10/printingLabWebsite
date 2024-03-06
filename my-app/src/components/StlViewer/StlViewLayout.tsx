@@ -5,7 +5,7 @@ import StlFileReader from "./FileReader";
 import { STLLoader } from 'three/examples/jsm/loaders/STLLoader.js';
 import ColorPicker from 'react-pick-color';
 import { useRouter } from "next/navigation";
-import { Material, Finish, Purchase} from "../../utils/constructs";
+import { Material, Finish} from "../../utils/constructs";
 import { fetchMaterials, fetchFinish,fetchItem } from "../../api/database/fetch";
 import Cards from "../Card";
 import Link from "next/link";
@@ -13,6 +13,8 @@ import { weightCosts } from "@/utils/calcs";
 import StlValidation from "./ValidateStl";
 import { sendEmailwAttachment } from "../../utils/sendEmai";
 import { send } from "process";
+import { purchase } from "../../utils/constructs";
+import { on } from "events";
 
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 type ValuePiece = Date | null;
@@ -30,7 +32,12 @@ interface BookingFormProps {
 
 }
 
-export default function CardLayout({ onFinish, onFile, onPrice, onFinishing, onColor, onMaterial, onSize, onWeight }: BookingFormProps) {
+interface purchasing {
+  onPurchase: (purchase: purchase) => void;
+  onDone: (done: boolean) => void;
+}
+
+export default function CardLayout({onPurchase,onDone}:purchasing) {
   const [materials, setMaterials] = useState<Material[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -38,7 +45,7 @@ export default function CardLayout({ onFinish, onFile, onPrice, onFinishing, onC
   const [validationResult, setValidationResult] = useState<string | null>(null);
   const [finish, setFinish] = useState<Finish[]>([]);
   const [color, setColor] = useState("#fff");
-  const [purchase, setPurchase] = useState<Purchase>({} as Purchase);
+  const [purchase, setPurchase] = useState<purchase>({} as purchase);
   const [selectedMaterial, setSelectedMaterial] = useState<string>("");
   const [selectedFinish, setSelectedFinish] = useState<string>("");
   const [price, setPrice] = useState<number>(0);
@@ -47,18 +54,13 @@ export default function CardLayout({ onFinish, onFile, onPrice, onFinishing, onC
   const [volume, setVolume] = useState<number>(0);
   const [check, setCheck] = useState<string>("");
   const [stingFile, setStringFile] = useState<string>("");
-  const [buffer, setBuffer] = useState<Buffer | null>(null);
+  const [buffer, setBuffer] = useState<string | null>(null);
 
  
   function complete() {
-    onFinish(true);
-    onFile(selectedFile!);
-    onPrice(price);
-    onFinishing(selectedFinish);
-    onColor(color);
-    onMaterial(selectedMaterial);
-    onSize(size);
-    onWeight(volume*0.001);}
+    onPurchase(purchase);
+    onDone(true);
+  }
   
 
     useEffect(() => {
@@ -153,8 +155,7 @@ useEffect(() => {
       const content = buffert.toString('base64')
 
   
-      setBuffer(buffert);
-      sendEmailwAttachment(JSON.stringify(purchase), content)
+      return content;
     } catch (error) {
       console.error("Error buffering file:", error);
       setBuffer(null); // Or handle the error as appropriate
@@ -187,11 +188,13 @@ useEffect(() => {
 
     } else if (tab === 4 && color) {
       purchase.Price = price;
-      purchase.Color = color;
+      purchase.color = color;
       purchase.Finish = selectedFinish;
-      purchase.SizeXYZ = size
-      purchase.Service = ""
+      purchase.Material = selectedMaterial;
       purchase.Weight = size[0]*size[1]*size[2]*0.000001
+      bufferize(selectedFile!).then((data) => {purchase.STL = data!;});
+
+    
 
       
       complete();

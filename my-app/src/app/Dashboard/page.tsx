@@ -1,23 +1,29 @@
-
-
-import React from 'react';
+'use client'
+import React, { use, useEffect } from 'react';
 import AddButton from '@/components/sticky';
 import Header from '@/components/Header';
-import { fetchUser } from '@/api/database/fetch';
-
+import { fetchUser, fetchPurchase } from '@/api/database/fetch';
+import Cards from '@/components/dashboard/Card';
 
 export default function Dashboard(){
 
-    fetchUser().then((session) => {
-        console.log(session)
+    const [purchases, setPurchases] = React.useState([]);
+    useEffect(() => {
+    fetchUser().then((user) => {
+        console.log(user!.user.id, "session");
+        fetchPurchase(user!.user.id).then((data) => {
+            setPurchases(data!);
+            console.log(data!)
+        } ) 
+
     }
-    )
+    )}, []);
     
 
 
     return(<div>
         <Header />
-        <h1>Dashboard</h1>
+        <Cards />
         <AddButton />
     </div>)
 }

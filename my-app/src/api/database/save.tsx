@@ -1,5 +1,6 @@
 import superbase from "../../database/superbase";
 import {fetchUser} from "./fetch";
+import { purchase,customer } from "@/utils/constructs";
 
 export async function saveUser(user: any) {
     // saves user to customer table with these fields: UserId(foreign key for user table), Fname, Lname, Org, Add1, Add2, Zip, MobileNumber, Email
@@ -26,3 +27,30 @@ export async function saveUser(user: any) {
             console.log('User saved successfully');
         }
     };
+
+
+    export async function savePurchase(purchase: purchase, customer: customer) {
+        // saves purchase to purchase table with these fields: id, created_at, STL, Price, Progress, Paid, Material, Finish, Weight, Email, Customer, Count
+        const { data, error } = await superbase.from('Purchases').insert([
+            {
+                created_at: new Date().toISOString(),
+                STL: purchase.STL,
+                Price: purchase.Price,
+                Progress: 'Recieved file',
+                Paid: false,
+                Material: purchase.Material,
+                Finish: purchase.Finish,
+                Weight: 0,
+                Email: customer.Email,
+                Customer_ID: customer.UserID,
+                Color: purchase.color,
+                Count: 1
+            }
+    
+        ]); 
+        if (error) {
+            console.error('Error saving purchase:', error.message);}
+            else {
+                console.log('Purchase saved successfully');
+            }
+        }

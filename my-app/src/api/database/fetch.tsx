@@ -26,20 +26,38 @@ export async function fetchItem(table:string, coloumn:string) {
   }
 }
 
-export async function fetchCuctomer() {
-  fetchUser().then((user) => {
-    try {
-      const { data, error } = superbase.from("Customer").select("*").eq("UserID", user!.user.id);
-      if (error) {
-        console.log("Error fetching customer:", error);
-      }
-      return data;
-    } catch (error) {
+export async function fetchCustomer(userid:string) {
+  console.log(userid,"idfjns")
+  try {
+    const { data, error } = await superbase.from("Customer").select("*").eq("UserID", userid);
+    if (error) {
       console.log("Error fetching customer:", error);
-      return [];
-    }
-  })}
 
+      throw new Error(error.message);
+    }
+    return data;
+
+  } catch (error) {
+    console.log("Error fetching customer:", error);
+    return [];
+  }
+
+}
+
+
+export async function fetchPurchase(userid:string) {
+  try {
+    const { data, error } = await superbase.from("Purchases").select("*").eq("Customer_ID", userid);
+    if (error) {
+      console.log("Error fetching purchase:", error);
+      throw new Error(error.message);
+    }
+    return data;
+  } catch (error) {
+    console.log("Error fetching purchase:", error);
+    return [];
+  }
+}
 export async function fetchUser() {
   const { data: { session }, error } = await superbase.auth.getSession()
   if (error) {
@@ -54,6 +72,7 @@ export async function fetchFinish() {
   try {
     const { data, error } = await superbase.from("Finish").select("*");
     if (error) {
+      console.log("Error fetching finish:", error);
       throw new Error(error.message);
     }
     return data;
