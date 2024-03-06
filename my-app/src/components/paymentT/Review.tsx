@@ -29,7 +29,7 @@ async function send(file: string, message: any) {
 
 export default function Review({address, purchase,customer}: ReviewProps) {
   savePurchase(purchase,customer);
-  //csend(purchase.STL, "this is a test message");
+  send(purchase.STL, "this is a test message");
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
