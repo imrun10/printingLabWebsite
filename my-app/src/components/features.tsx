@@ -4,9 +4,9 @@ import { useState, useRef, useEffect } from 'react'
 import { Transition } from '@headlessui/react'
 import Image from 'next/image'
 import FeaturesBg from '@/public/images/features-bg.png'
-import FeaturesElement1 from '@/public/images/features-element1.jpeg'
-import FeaturesElement2 from '@/public/images/features-element2.jpeg'
-import FeaturesElement3 from '@/public/images/features-element3.jpeg'
+import FeaturesElement1 from '@/public/images/features-element1.png'
+import FeaturesElement2 from '@/public/images/features-element2.png'
+import FeaturesElement3 from '@/public/images/features-element3.png'
 
 
 export default function Features() {
