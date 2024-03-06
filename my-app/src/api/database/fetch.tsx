@@ -52,6 +52,9 @@ export async function fetchPurchase(userid:string) {
       console.log("Error fetching purchase:", error);
       throw new Error(error.message);
     }
+    else{
+      console.log(data, "data")
+    }
     return data;
   } catch (error) {
     console.log("Error fetching purchase:", error);

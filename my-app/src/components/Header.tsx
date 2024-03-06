@@ -43,7 +43,7 @@ const Header: React.FC = (user) => {
                     <div className="flex-grow flex justify-center">
                         <ul className="flex space-x-4">
                             <li>
-                                <a href="#" className="block py-2 px-3 text-gray-700 border-b border-transparent hover:border-primary-700 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white dark:border-gray-700">Dashboard</a>
+                                <a href="/dashboard" className="block py-2 px-3 text-gray-700 border-b border-transparent hover:border-primary-700 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white dark:border-gray-700">Dashboard</a>
                             </li>
                             <li>
                                 <a href="#" className="block py-2 px-3 text-gray-700 border-b border-transparent hover:border-primary-700 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white dark:border-gray-700">Marketplace</a>

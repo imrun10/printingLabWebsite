@@ -15,6 +15,7 @@ import AddressForm from "./AddressForm";
 import PaymentForm from "./PaymentForm";
 import Review from "./Review";
 import { purchase,customer } from "@/utils/constructs";
+import { useRouter } from "next/navigation";
 
 function Copyright() {
   return (
@@ -57,9 +58,15 @@ export default function Checkout(
     console.log(customer, "customer2");
   } , []);
   const [activeStep, setActiveStep] = React.useState(0);
+  const route = useRouter();
+
 
   const handleNext = () => {
-    setActiveStep(activeStep + 1);
+    if (activeStep < 3) {
+    setActiveStep(activeStep + 1);}
+    else {
+      route.push("/dashboard")
+    }
   };
 
   const handleBack = () => {

@@ -6,8 +6,29 @@ import CardContent from '@mui/joy/CardContent';
 import IconButton from '@mui/joy/IconButton';
 import Typography from '@mui/joy/Typography';
 import BookmarkAdd from '@mui/icons-material/BookmarkAddOutlined';
+import { bufferToStl } from '@/utils/calcs';
+import StlViewer from '../StlViewer/StlViewer';
 
-export default function Cards() {
+
+interface CardProps {
+  material: string;
+  finish: string;
+  color: string;
+  price: number;
+  progress: number;
+  count: number;
+  stlFile: string;
+}
+
+const Cards: React.FC<CardProps> = ({
+  material,
+  finish,
+  color,
+  price,
+  progress,
+  count,
+  stlFile,
+}) => {
   return (
     <Card sx={{ width: 320 }}>
       <div style={{ background: '#2196f3', padding: '10px', borderRadius: '10px', marginBottom: '10px' }}>
@@ -16,27 +37,27 @@ export default function Cards() {
         </Typography>
       </div>
       <div style={{ background: '#f44336', padding: '10px', borderRadius: '10px', marginBottom: '10px' }}>
-        <Typography level="body-sm" sx={{ color: '#fff' }}>
-          Material: PLA
+        <Typography level="body-sm" sx={{ color: '#fff', marginBottom: '5px' }}>
+          Material: {material}
         </Typography>
-        <Typography level="body-sm" sx={{ color: '#fff' }}>
-          Finish: Matte
+        <Typography level="body-sm" sx={{ color: '#fff', marginBottom: '5px' }}>
+          Finish: {finish}
         </Typography>
-        <Typography level="body-sm" sx={{ color: '#fff' }}>
-          Color: Red
+        <Typography level="body-sm" sx={{ color: '#fff', marginBottom: '5px' }}>
+          Color: {color}
         </Typography>
-        <Typography level="body-sm" sx={{ color: '#fff' }}>
-          Price: $20
+        <Typography level="body-sm" sx={{ color: '#fff', marginBottom: '5px' }}>
+          Price: ${price}
         </Typography>
-        <Typography level="body-sm" sx={{ color: '#fff' }}>
-          Progress: 75%
+        <Typography level="body-sm" sx={{ color: '#fff', marginBottom: '5px' }}>
+          Progress: {progress}%
         </Typography>
-        <Typography level="body-sm" sx={{ color: '#fff' }}>
-          Count: 5
+        <Typography level="body-sm" sx={{ color: '#fff', marginBottom: '5px' }}>
+          Count: {count}
         </Typography>
       </div>
       <IconButton
-        aria-label="bookmark print order"
+        aria-label="bookmark print osrder"
         variant="plain"
         color="neutral"
         size="sm"
@@ -45,14 +66,13 @@ export default function Cards() {
         <BookmarkAdd />
       </IconButton>
       <AspectRatio minHeight="120px" maxHeight="200px">
- 
       </AspectRatio>
       <CardContent orientation="horizontal" sx={{ background: '#fff', borderRadius: '10px' }}>
         <div style={{ padding: '10px', borderRight: '1px solid #ccc' }}>
-          <Typography level="body-xs" sx={{ color: '#f44336' }}>
+          <Typography level="body-xs" sx={{ color: '#f44336', marginBottom: '5px' }}>
             STL File:
           </Typography>
-          <a href="https://example.com/print-order.stl" target="_blank" rel="noopener noreferrer">
+          <a href={stlFile} target="_blank" rel="noopener noreferrer">
             <Typography fontSize="lg" fontWeight="lg">
               Download STL
             </Typography>
@@ -70,4 +90,6 @@ export default function Cards() {
       </CardContent>
     </Card>
   );
-}
+};
+
+export default Cards;
