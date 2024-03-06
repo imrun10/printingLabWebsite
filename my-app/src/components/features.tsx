@@ -4,7 +4,10 @@ import { useState, useRef, useEffect } from 'react'
 import { Transition } from '@headlessui/react'
 import Image from 'next/image'
 import FeaturesBg from '@/public/images/features-bg.png'
-import FeaturesElement from '@/public/images/features-element.png'
+import Image1 from '/public/images/image1.png'
+import Image2 from '/public/images/image2.png'
+import Image3 from '/public/images/image3.png'
+
 
 export default function Features() {
   
@@ -33,7 +36,7 @@ export default function Features() {
           {/* Section header */}
           <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
             <h1 className="h2 mb-4">Explore the solutions</h1>
-            <p className="text-xl text-gray-600">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur excepteur sint occaecat cupidatat.</p>
+            <p className="text-xl text-gray-600">Exploring solutions with us involves collaborative brainstorming sessions, where clients can leverage our expertise in product design and development alongside cutting-edge technology to tailor innovative solutions to their specific needs and requirements.</p>
           </div>
 
           {/* Section content */}
@@ -43,7 +46,7 @@ export default function Features() {
             <div className="max-w-xl md:max-w-none md:w-full mx-auto md:col-span-7 lg:col-span-6 md:mt-6" data-aos="fade-right">
               <div className="md:pr-4 lg:pr-12 xl:pr-16 mb-8">
                 <h3 className="h3 mb-3">Powerful suite of tools</h3>
-                <p className="text-xl text-gray-600">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa.</p>
+                <p className="text-xl text-gray-600">We utilize industry-standard tools such as SOLIDWORKS for 3D modeling, advanced 3D printers, a laser cutter, and specialized software for reverse engineering to deliver innovative product design and development solutions.</p>
               </div>
               {/* Tabs buttons */}
               <div className="mb-8 md:mb-0">
@@ -53,8 +56,8 @@ export default function Features() {
                   onClick={(e) => { e.preventDefault(); setTab(1); }}
                 >
                   <div>
-                    <div className="font-bold leading-snug tracking-tight mb-1">Building the Simple ecosystem</div>
-                    <div className="text-gray-600">Take collaboration to the next level with security and administrative features built for teams.</div>
+                    <div className="font-bold leading-snug tracking-tight mb-1">Comprehensive Product Design and Development Services</div>
+                    <div className="text-gray-600">We offer a wide range of services aimed at assisting individuals, businesses, and institutions in bringing their ideas to life. This includes product design and development using advanced 3D modeling software such as SOLIDWORKS. We specialize in turning concepts into tangible prototypes, facilitating the innovation process for our clients.</div>
                   </div>
                   <div className="flex justify-center items-center w-8 h-8 bg-white rounded-full shadow flex-shrink-0 ml-3">
                     <svg className="w-3 h-3 fill-current" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
@@ -68,8 +71,8 @@ export default function Features() {
                   onClick={(e) => { e.preventDefault(); setTab(2); }}
                 >
                   <div>
-                    <div className="font-bold leading-snug tracking-tight mb-1">Building the Simple ecosystem</div>
-                    <div className="text-gray-600">Take collaboration to the next level with security and administrative features built for teams.</div>
+                    <div className="font-bold leading-snug tracking-tight mb-1">Advanced Prototyping Capabilities</div>
+                    <div className="text-gray-600">With access to cutting-edge technology, including 3D printers and a laser cutter, we enable rapid prototyping for our clients. Whether it is a small-scale prototype for testing or a detailed model for presentation purposes, we ensure precise and efficient prototyping to meet the diverse needs of our clientele.</div>
                   </div>
                   <div className="flex justify-center items-center w-8 h-8 bg-white rounded-full shadow flex-shrink-0 ml-3">
                     <svg className="w-3 h-3 fill-current" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
@@ -83,8 +86,8 @@ export default function Features() {
                   onClick={(e) => { e.preventDefault(); setTab(3); }}
                 >
                   <div>
-                    <div className="font-bold leading-snug tracking-tight mb-1">Building the Simple ecosystem</div>
-                    <div className="text-gray-600">Take collaboration to the next level with security and administrative features built for teams.</div>
+                    <div className="font-bold leading-snug tracking-tight mb-1">Reverse Engineering Expertise</div>
+                    <div className="text-gray-600">In addition to our design and prototyping services, we also provide reverse engineering solutions. This involves the process of deconstructing and analyzing existing products or components to understand their design and functionality. By offering reverse engineering services, we assist clients in improving and optimizing existing designs or products, fostering innovation and competitiveness in their respective industries.</div>
                   </div>
                   <div className="flex justify-center items-center w-8 h-8 bg-white rounded-full shadow flex-shrink-0 ml-3">
                     <svg className="w-3 h-3 fill-current" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
@@ -115,7 +118,7 @@ export default function Features() {
                   >
                     <div className="relative inline-flex flex-col">
                       <Image className="md:max-w-none mx-auto rounded" src={FeaturesBg} width={500} height="462" alt="Features bg" />
-                      <Image className="md:max-w-none absolute w-full left-0 transform animate-float" src={FeaturesElement} width={500} height="44" alt="Element" style={{ top: '30%' }} />
+                      <Image className="md:max-w-none absolute w-full left-0 transform animate-float" src={Image1} width={500} height="44" alt="Element" style={{ top: '30%' }} />
                     </div>
                   </Transition>
                   {/* Item 2 */}
@@ -134,7 +137,7 @@ export default function Features() {
                   >
                     <div className="relative inline-flex flex-col">
                       <Image className="md:max-w-none mx-auto rounded" src={FeaturesBg} width={500} height="462" alt="Features bg" />
-                      <Image className="md:max-w-none absolute w-full left-0 transform animate-float" src={FeaturesElement} width={500} height="44" alt="Element" style={{ top: '30%' }} />
+                      <Image className="md:max-w-none absolute w-full left-0 transform animate-float" src={Image2} width={500} height="44" alt="Element" style={{ top: '30%' }} />
                     </div>
                   </Transition>
                   {/* Item 3 */}
@@ -153,7 +156,7 @@ export default function Features() {
                   >
                     <div className="relative inline-flex flex-col">
                       <Image className="md:max-w-none mx-auto rounded" src={FeaturesBg} width={500} height="462" alt="Features bg" />
-                      <Image className="md:max-w-none absolute w-full left-0 transform animate-float" src={FeaturesElement} width={500} height="44" alt="Element" style={{ top: '30%' }} />
+                      <Image className="md:max-w-none absolute w-full left-0 transform animate-float" src={Image3} width={500} height="44" alt="Element" style={{ top: '30%' }} />
                     </div>
                   </Transition>
                 </div>
