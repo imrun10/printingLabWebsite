@@ -36,7 +36,7 @@ export default function Features() {
           {/* Section header */}
           <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
             <h1 className="h2 mb-4">Explore the solutions</h1>
-            <p className="text-xl text-gray-600">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur excepteur sint occaecat cupidatat.</p>
+            <p className="text-xl text-gray-600">Exploring solutions with us involves collaborative brainstorming sessions, where clients can leverage our expertise in product design and development alongside cutting-edge technology to tailor innovative solutions to their specific needs and requirements.</p>
           </div>
 
           {/* Section content */}
@@ -46,7 +46,7 @@ export default function Features() {
             <div className="max-w-xl md:max-w-none md:w-full mx-auto md:col-span-7 lg:col-span-6 md:mt-6" data-aos="fade-right">
               <div className="md:pr-4 lg:pr-12 xl:pr-16 mb-8">
                 <h3 className="h3 mb-3">Powerful suite of tools</h3>
-                <p className="text-xl text-gray-600">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa.</p>
+                <p className="text-xl text-gray-600">We utilize industry-standard tools such as SOLIDWORKS for 3D modeling, advanced 3D printers, a laser cutter, and specialized software for reverse engineering to deliver innovative product design and development solutions.</p>
               </div>
               {/* Tabs buttons */}
               <div className="mb-8 md:mb-0">
