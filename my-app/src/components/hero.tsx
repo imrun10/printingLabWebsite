@@ -29,7 +29,11 @@ export default function Hero() {
 
           {/* Section header */}
           <div className="text-center pb-12 md:pb-16">
-            <h1 className="text-5xl md:text-6xl font-extrabold leading-tighter tracking-tighter mb-4" data-aos="zoom-y-out"> Welcome to the <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400">DLab </span></h1>
+          <h1 className="text-5xl md:text-6xl font-extrabold leading-tighter tracking-tighter mb-4" data-aos="zoom-y-out">
+            Welcome to the <span style={{color: 'darkred'}}>D</span>
+            <span style={{color: 'darkblue'}}>Lab</span>
+          </h1>
+
             <div className="max-w-3xl mx-auto">
               <p className="text-xl text-gray-600 mb-8" data-aos="zoom-y-out" data-aos-delay="150">The AUBH Design Lab (DLAB) is inaugurated as part of a collaboration between the American University of Bahrain (AUBH) & Go Fab 3D W.L.L. to advance innovation and creativity on the AUBH campus while providing students with the necessary practical skills to thrive in a fast-paced, digital world.</p>
             </div>
