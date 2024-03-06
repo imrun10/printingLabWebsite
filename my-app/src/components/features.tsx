@@ -4,7 +4,10 @@ import { useState, useRef, useEffect } from 'react'
 import { Transition } from '@headlessui/react'
 import Image from 'next/image'
 import FeaturesBg from '@/public/images/features-bg.png'
-import FeaturesElement from '@/public/images/features-element.png'
+import FeaturesElement1 from '@/public/images/features-element1.jpeg'
+import FeaturesElement2 from '@/public/images/features-element2.jpeg'
+import FeaturesElement3 from '@/public/images/features-element3.jpeg'
+
 
 export default function Features() {
   
@@ -69,7 +72,7 @@ export default function Features() {
                 >
                   <div>
                     <div className="font-bold leading-snug tracking-tight mb-1">Advanced Prototyping Capabilities</div>
-                    <div className="text-gray-600">With access to cutting-edge technology, including 3D printers and a laser cutter, we enable rapid prototyping for our clients. Whether it's a small-scale prototype for testing or a detailed model for presentation purposes, we ensure precise and efficient prototyping to meet the diverse needs of our clientele.</div>
+                    <div className="text-gray-600">With access to cutting-edge technology, including 3D printers and a laser cutter, we enable rapid prototyping for our clients. Whether it is a small-scale prototype for testing or a detailed model for presentation purposes, we ensure precise and efficient prototyping to meet the diverse needs of our clientele.</div>
                   </div>
                   <div className="flex justify-center items-center w-8 h-8 bg-white rounded-full shadow flex-shrink-0 ml-3">
                     <svg className="w-3 h-3 fill-current" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
@@ -115,7 +118,7 @@ export default function Features() {
                   >
                     <div className="relative inline-flex flex-col">
                       <Image className="md:max-w-none mx-auto rounded" src={FeaturesBg} width={500} height="462" alt="Features bg" />
-                      <Image className="md:max-w-none absolute w-full left-0 transform animate-float" src={FeaturesElement} width={500} height="44" alt="Element" style={{ top: '30%' }} />
+                      <Image className="md:max-w-none absolute w-full left-0 transform animate-float" src={FeaturesElement1} width={500} height="44" alt="Element" style={{ top: '30%' }} />
                     </div>
                   </Transition>
                   {/* Item 2 */}
@@ -134,7 +137,7 @@ export default function Features() {
                   >
                     <div className="relative inline-flex flex-col">
                       <Image className="md:max-w-none mx-auto rounded" src={FeaturesBg} width={500} height="462" alt="Features bg" />
-                      <Image className="md:max-w-none absolute w-full left-0 transform animate-float" src={FeaturesElement} width={500} height="44" alt="Element" style={{ top: '30%' }} />
+                      <Image className="md:max-w-none absolute w-full left-0 transform animate-float" src={FeaturesElement2} width={500} height="44" alt="Element" style={{ top: '30%' }} />
                     </div>
                   </Transition>
                   {/* Item 3 */}
@@ -153,7 +156,7 @@ export default function Features() {
                   >
                     <div className="relative inline-flex flex-col">
                       <Image className="md:max-w-none mx-auto rounded" src={FeaturesBg} width={500} height="462" alt="Features bg" />
-                      <Image className="md:max-w-none absolute w-full left-0 transform animate-float" src={FeaturesElement} width={500} height="44" alt="Element" style={{ top: '30%' }} />
+                      <Image className="md:max-w-none absolute w-full left-0 transform animate-float" src={FeaturesElement3} width={500} height="44" alt="Element" style={{ top: '30%' }} />
                     </div>
                   </Transition>
                 </div>
