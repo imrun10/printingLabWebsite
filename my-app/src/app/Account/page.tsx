@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Card, CardContent, Typography } from '@mui/material';
-import Header from '@/components/Header';
+import Header from '@/components/sections/Header';
 
 enum OrderStatus {
   PRINTING = 'Printing',

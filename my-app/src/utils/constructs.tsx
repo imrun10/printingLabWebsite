@@ -1,13 +1,12 @@
-import exp from "constants";
-
-export interface Material {
+// all the constructs
+export interface Material { // material object for table
   id : number;
   Name: string;
   Price: number;
   Density: number;
 }
 
-export interface customer {
+export interface customer {  // customer object for table
   UserID: string;
   created_at: string;
   Fname: string;
@@ -21,8 +20,7 @@ export interface customer {
 
 }
 
-
-export interface purchase{
+export interface purchase{ // purchase object for table
   id: string;
   created_at: string;
   STL: any;
@@ -37,30 +35,16 @@ export interface purchase{
   Count: number;
   color: string;
 }
-export interface Finish {
+export interface Finish { // finish object for table
   Name: string;
   Percentage: number;
 }
 
-export interface StlFileReaderProps {
+export interface StlFileReaderProps { // stl file reader props
   file: File;
   onData: (data: number[]) => void;
 }
 
-export interface Value {
-  ValuePiece: ValuePiece | [ValuePiece, ValuePiece];
-}
 
-export interface ValuePiece {
-  Date: Date | null;
-}
 
-export interface User {
-  name: string;
-      lastName: string;
-      address: string;
-      mobileNumber: string;
-      city: string;
-      Organization: string;
-      zip: string;
-      country: string;};
+

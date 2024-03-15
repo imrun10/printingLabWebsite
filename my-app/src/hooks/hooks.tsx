@@ -1,4 +1,4 @@
-
+// custom hooks
 
 
 
@@ -10,7 +10,7 @@ import { fetchUser } from '@/api/database/fetch';
 
 
 
-export default function useCustomer() {
+export default function useCustomer() { // custom hook to get the customer data
     const [checkUser, setCheckUser] = useState<any>(null);
     
     useEffect(() => {

@@ -6,7 +6,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Grid from '@mui/material/Grid';
 import { customer,purchase } from '@/utils/constructs';
 import { savePurchase } from '@/api/database/save';
-import { sendEmailwAttachment } from '@/utils/sendEmai';
+import { sendEmailwAttachment } from '@/utils/sendEmail';
 
 
 

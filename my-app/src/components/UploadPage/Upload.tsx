@@ -3,169 +3,84 @@ import React, { use, useEffect, useState } from "react";
 import StlViewer from "./StlViewer";
 import StlFileReader from "./FileReader";
 import { STLLoader } from 'three/examples/jsm/loaders/STLLoader.js';
-import ColorPicker from 'react-pick-color';
+
 import { useRouter } from "next/navigation";
 import { Material, Finish} from "../../utils/constructs";
 import { fetchMaterials, fetchFinish,fetchItem } from "../../api/database/fetch";
 import Cards from "../Card";
-import Link from "next/link";
-import { weightCosts } from "@/utils/calcs";
-import StlValidation from "./ValidateStl";
-import { sendEmailwAttachment } from "../../utils/sendEmai";
-import { send } from "process";
+import { updatePrice } from "@/utils/funcs";
 import { purchase } from "../../utils/constructs";
-import { on } from "events";
-
-type Value = ValuePiece | [ValuePiece, ValuePiece];
-type ValuePiece = Date | null;
 
 
-interface BookingFormProps {
-  onFinish: (done: boolean) => void;
-  onFile: (file: File) => void;
-  onPrice: (price: number) => void;
-  onFinishing: (finishing: string) => void;
-  onColor: (color: string) => void;
-  onMaterial: (material: string) => void;
-  onSize: (size: number[]) => void;
-  onWeight: (weight: number) => void;
 
-}
 
-interface purchasing {
+interface purchasing { // construct unique to this page to return the purchase object and the done boolean
   onPurchase: (purchase: purchase) => void;
   onDone: (done: boolean) => void;
 }
 
-export default function CardLayout({onPurchase,onDone}:purchasing) {
-  const [materials, setMaterials] = useState<Material[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [tab, setTab] = useState<number>(0);
-  const [validationResult, setValidationResult] = useState<string | null>(null);
-  const [finish, setFinish] = useState<Finish[]>([]);
-  const [color, setColor] = useState("#fff");
-  const [purchase, setPurchase] = useState<purchase>({} as purchase);
-  const [selectedMaterial, setSelectedMaterial] = useState<string>("");
-  const [selectedFinish, setSelectedFinish] = useState<string>("");
-  const [price, setPrice] = useState<number>(0);
-  const [done, setDone] = useState<boolean>(false);
-  const [size, setSize] = useState<number[]>([0,0,0]);
-  const [volume, setVolume] = useState<number>(0);
-  const [check, setCheck] = useState<string>("");
-  const [stingFile, setStringFile] = useState<string>("");
-  const [buffer, setBuffer] = useState<string | null>(null);
+export default function Upload({onPurchase,onDone}:purchasing) {
+  const [loading, setLoading] = useState<boolean>(true); // loading boolean (implement loading screen later)
+  const [selectedFile, setSelectedFile] = useState<File | null>(null); // selected file
+  const [tab, setTab] = useState<number>(0); // tab number
+  const [color, setColor] = useState("#fff"); // color (does not update right now)
+  const [purchase, setPurchase] = useState<purchase>({} as purchase); // purchase object
+  const [materials, setMaterials] = useState<Material[]>([]); // array of materials
+  const [selectedMaterial, setSelectedMaterial] = useState<string>(""); // selected material
+  const [finish, setFinish] = useState<Finish[]>([]); // array of finishes
+  const [selectedFinish, setSelectedFinish] = useState<string>(""); // selected finish
+  const [price, setPrice] = useState<number>(0); // price
+  const [done, setDone] = useState<boolean>(false); // done boolean
+  const [size, setSize] = useState<number[]>([0,0,0]); // size of the model needs to be redone
+  const [check, setCheck] = useState<string>(""); // idk
+  const router = useRouter();
+
 
  
   function complete() {
     onPurchase(purchase);
     onDone(true);
-  }
+  } // function to run when the purchase is complete
   
 
+
+
+
     useEffect(() => {
-      fetchMaterials()
+      fetchMaterials() // promise to fetch materials
         .then((data) => setMaterials(data))
         .catch((error) => console.log("Error fetching materials:", error))
         .finally(() => setLoading(false));
   
-      fetchFinish()
+      fetchFinish() // promise to fetch finishes
         .then((data) => setFinish(data))
         .catch((error) => console.log("Error fetching finish:", error))
         .finally(() => setLoading(false));
   
       console.log("Effect triggered");
-    }, []);
+    }, []); // does this as soon as the page is rendered (fetches materials and finishes)
 
-  // purchase object: {file: stl file, material: string, xyzSize = {x: number, y: number, z: number}, finishing: string, quantity: number, color: string, service: string cost: number}
-  // material cost {material: string, cost: number}
 
-  async function defaultTab() {
-    setTab(1);
-  }
 
   useEffect(() => {
+    function defaultTab() {
+      setTab(1);
+    } 
     defaultTab();
-  }, []);
+  }, []); // makes sure i am in tab 1
   
   
 //Update the price
-useEffect(() => {
-  async function updatePrice(selectedMaterial: string, selectedFinish: string, size: number[]) {
-    let currentPrice = 0;
-  
-    if (selectedMaterial) {
-      try {
-        const materials = await fetchMaterials();
-        const material = materials.find((m) => m.Name === selectedMaterial);
-        if (material) {
-          currentPrice = material.Price * volume * material.Density * 0.001;
-          console.log("currentPrice", currentPrice);
-        }
-      } catch (error) {
-        console.log("Error fetching materials:", error);
-      }
-    }
-  
-    if (selectedFinish) {
-      try {
-        const finishes = await fetchFinish();
-        const fin = finishes.find((f) => f.Name === selectedFinish);
-        if (fin) {
-          currentPrice += currentPrice * (fin.Percentage / 100);
-        }
-      } catch (error) {
-        console.log("Error fetching finish:", error);
-      }
-    }
-  
-    console.log("currentPrice", currentPrice);
-    return currentPrice;
-  }
-
-  //if color
-
-  async function fetchData() {
-    try {
-      const price = await updatePrice(selectedMaterial, selectedFinish, size);
-      setPrice(price);
-      console.log("price", price);
-    } catch (error) {
-      console.log("Error updating price:", error);
-    }
-  }
-
-  fetchData();
+useEffect(() => { //use memo might be better but idk
+   updatePrice(materials, finish, selectedMaterial, selectedFinish, size).then((price) => setPrice(price)); //updates the price then sets price
 }, [selectedMaterial, selectedFinish]);
 
 
-//||\\//||\\//||\\//||\\
-  const router = useRouter();
 
-  function updatePrice(cost:number) {
-    setPrice(price+cost)
-    console.log("price", price)
-  }
+
     
-  async function bufferize(file: File) {
-    try {
-      const arrayBuffer = await file.arrayBuffer();
-      const buffert = Buffer.from(arrayBuffer);
-      console.log("PREBuffer:", buffert);
-      const content = buffert.toString('base64')
 
-  
-      return content;
-    } catch (error) {
-      console.error("Error buffering file:", error);
-      setBuffer(null); // Or handle the error as appropriate
-    }
-  }
 
-  useEffect(() => { 
-    if(selectedFile){
-      setVolume(size[0]*size[1]*size[2])
-    }},[size])
 
   function handleNext() {
   
@@ -174,9 +89,7 @@ useEffect(() => {
     console.log("size", size)
       console.log("volume", size[0]*size[1]*size[2]);
       console.log("Materials:", materials);
-
-
-      
+    
       setTab(2);
     } else if (tab === 2 && selectedMaterial) {
       setDone(false)
@@ -242,7 +155,7 @@ useEffect(() => {
           materials.map((material) => {
             return (
               <div key={material.Name} onClick={() => {setSelectedMaterial(material.Name)}} className="flex-auto h-full ">
-                <Cards name={material.Name} price={calc(material.Price,material.Density).toFixed(2).toString()+"BHD"} CardSelect={selectedMaterial === material.Name} />
+                <Cards name={material.Name} price={price.toFixed(2).toString()+"BHD"} CardSelect={selectedMaterial === material.Name} />
               </div>
             );
           })}

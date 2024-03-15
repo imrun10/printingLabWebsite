@@ -1,25 +1,26 @@
 "use client";
 
+// client redered header (might be better as a server rendered component but idk)
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { fetchUser } from '@/api/database/fetch';
 import { Typography } from '@mui/material';
 import Link from 'next/link';
-import supabase from '@/database/superbase';
+import supabase from '@/databaseInitialise/superbase';
 import { useRouter } from 'next/navigation';
 import Logo from '/public/AUBH-Logo.svg';
 
 const Header: React.FC = (user) => {
-    const router = useRouter();
-    const [checkUser, setCheckUser] = useState<any>(null)
+    const router = useRouter(); // router for routing
+    const [checkUser, setCheckUser] = useState<any>(null) // checks if the user is signed in
 
-    async function logOut() {
+    async function logOut() { //logout
         let { error } = await supabase.auth.signOut()
         router.push('/login')
     }
 
     useEffect(() => {
-        const checkUser = async () => {
+        const checkUser = async () => { // this might be better done in the server?
             const user = await fetchUser();
             if (user) {
                 console.log("Signed in already", user);
@@ -39,7 +40,7 @@ const Header: React.FC = (user) => {
                 <div className="flex justify-between items-center mx-auto max-w-screen-xl">
                     <Link href="/">
                         <div className="flex items-center absolute top-0 left-0">
-                            <Image src={Logo} width={200} height={200} alt="AUBH Logo" />
+                            <Image src={Logo} width={200} height={200} alt="AUBH Logo" /> {/* this should be the dlab logo */}
                         </div>
                     </Link>
 

@@ -1,19 +1,10 @@
-import superbase from "../../database/superbase";
+//Fetch requests to the database
 
-export async function fetchMaterials() {
-  try {
-    const { data, error } = await superbase.from("Materials").select("*");
-    if (error) {
-      throw new Error(error.message);
-    }
-    return data;
-  } catch (error) {
-    console.log("Error fetching materials:", error);
-    return [];
-  }
-}
 
-export async function fetchItem(table:string, coloumn:string) {
+import superbase from "../../databaseInitialise/superbase";
+
+
+export async function fetchItem(table:string, coloumn:string) { //generic fetech request that u pass in coloumn and table
   try {
     const { data, error } = await superbase.from(table).select(coloumn);
     if (error) {
@@ -26,8 +17,20 @@ export async function fetchItem(table:string, coloumn:string) {
   }
 }
 
-export async function fetchCustomer(userid:string) {
-  console.log(userid,"idfjns")
+export async function fetchMaterials() { //fetches all materials
+  try {
+    const { data, error } = await superbase.from("Materials").select("*");
+    if (error) {
+      throw new Error(error.message);
+    }
+    return data;
+  } catch (error) {
+    console.log("Error fetching materials:", error);
+    return [];
+  }
+}
+
+export async function fetchCustomer(userid:string) { //fetches customer (information on the user) the by user id
   try {
     const { data, error } = await superbase.from("Customer").select("*").eq("UserID", userid);
     if (error) {
@@ -45,7 +48,7 @@ export async function fetchCustomer(userid:string) {
 }
 
 
-export async function fetchPurchase(userid:string) {
+export async function fetchPurchase(userid:string) { //fetches purchase by user id
   try {
     const { data, error } = await superbase.from("Purchases").select("*").eq("Customer_ID", userid);
     if (error) {
@@ -61,7 +64,7 @@ export async function fetchPurchase(userid:string) {
     return [];
   }
 }
-export async function fetchUser() {
+export async function fetchUser() { //fetches user for the user ID
   const { data: { session }, error } = await superbase.auth.getSession()
   if (error) {
     console.log("Error fetching user:", error);
@@ -71,7 +74,7 @@ export async function fetchUser() {
 
   return session;
 }
-export async function fetchFinish() {
+export async function fetchFinish() { //fetches all finishes
   try {
     const { data, error } = await superbase.from("Finish").select("*");
     if (error) {

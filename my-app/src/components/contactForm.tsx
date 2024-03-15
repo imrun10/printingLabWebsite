@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect } from "react";
-import { sendEmail } from "@/utils/sendEmai";
+import { sendEmail } from "@/utils/sendEmail";
 
 export default function Contact() {
     const [emailSent, setEmailSent] = React.useState(false);

@@ -14,8 +14,8 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useEffect } from 'react';
 import { fetchUser } from '@/api/database/fetch';
-import  supabase  from '@/database/superbase'; // Assuming you have a supabase.js file with supabase client configuration
-import Header from '@/components/Header';
+import  supabase  from '@/databaseInitialise/superbase'; // Assuming you have a supabase.js file with supabase client configuration
+import Header from '@/components/sections/Header';
 
 
 export default function SignIn() {

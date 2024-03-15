@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import supabase from '@/database/superbase';
+import supabase from '@/databaseInitialise/superbase';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
@@ -10,7 +10,7 @@ import CardContent from '@mui/material/CardContent';
 import Link from 'next/link';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
-import Header from '@/components/Header';
+import Header from '@/components/sections/Header';
 import { saveUser } from '@/api/database/save';
 export default function SignUp() {
   const router = useRouter();

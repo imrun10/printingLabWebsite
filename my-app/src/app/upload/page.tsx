@@ -1,9 +1,13 @@
 "use client";
+//client rendered upload and pay stage
+
+
+
 import React, { useState, createContext, use, useEffect } from "react";
 
-import Header from "@/components/Header";
+import Header from "@/components/sections/Header";
 import "tailwindcss/tailwind.css";
-import CardLayout from "@/components/StlViewer/StlViewLayout";
+import Upload from "@/components/UploadPage/Upload";
 import { fetchCustomer, fetchUser } from "@/api/database/fetch";
 import BookingForm from "@/components/Payments/BookingForm";
 import "@/app/upload/background.css";
@@ -11,50 +15,34 @@ import Checkout from "@/components/paymentT/Checkout";
 import { customer } from "@/utils/constructs";
 import { purchase } from "@/utils/constructs";
 
-interface Purchase {
-  stlFile: File;
-  Price: number;
-  Color: string;
-  SizeXYZ: number[];
-}
 
 
 const UploadPage: React.FC = () => {
-  const [done, setDone] = useState<boolean>(false);
-  const [price, setPrice] = useState<number>(0);
-  const [stlFile, setStlFile] = useState<File | null>(null);
-  const [weight, setWeight] = useState<number | null>(null);
-  const [volume, setVolume] = useState<number | null>(null);
-  const [color, setColor] = useState<string | null>(null);
-  const [materials, setMaterial] = useState<string | null>(null);
-  const [size, setSize] = useState<number[]>([0, 0, 0]);
-  const [finishing, setFinishing] = useState<string | null>(null);
-  const [success, setSuccess] = useState<boolean>(false);
-  const [customer, setCustomer] = useState<customer | null>(null);
-  const [purchase, setPurchase] = useState<purchase | null>(null);
+  const [done, setDone] = useState<boolean>(false); // boolean to switch between the upload and pay stage
+  const [customer, setCustomer] = useState<customer | null>(null); // customer object
+  const [purchase, setPurchase] = useState<purchase | null>(null); // purchase object
 
   useEffect(() => {
-      fetchUser()
+      fetchUser() // promise to get customer data from the database
       .then((user) => {
-        if (user) {
-          console.log("Signed in already", user.user.id);
-          fetchCustomer(user.user.id)
-          .then((data) => {setCustomer(data[0]!)}).catch((error) => {console.log(error)});
+        if (user) { // checks if the user is already signed in
+          console.log("Signed in already", user.user.id); // log the user id
+          fetchCustomer(user.user.id) //promises to get the customer data from the database
+          .then((data) => {setCustomer(data[0]!)}).catch((error) => {console.log(error)}); // if it does, set the customer object to the data. ! means that the data is not null
         } else {
-          console.log("Not signed in");
+          console.log("Not signed in"); // not signed in. it should instead rerout you to the sign in page
         }
-      }) .catch((error) => console.log("Error fetching materials:", error))
-      .finally(() => setDone(false));}, []);
+      }) .catch((error) => console.log("Error fetching materials:", error)) // if there is an error, log the error
+      .finally(() => setDone(false));}, []); // finally, set done to false (no need for this section really but it is there for good measure
 
   
       useEffect(() => {
-        console.log(customer, "customer");
+        console.log(customer, "customer"); // double checks the customer object
       }
       , [customer]);
 
 
 
-  //reload page when done is changed
 
   return (
     <div className="pb-0 mb-0">
@@ -69,7 +57,7 @@ const UploadPage: React.FC = () => {
           justifyContent: "center",
           alignItems: "center",
           height: "100vh",
-        }}
+        }} 
       >
         <div
           style={{
@@ -79,21 +67,21 @@ const UploadPage: React.FC = () => {
             boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
           }}
         >
-          {!done ? (
-            <CardLayout
-              onPurchase={setPurchase}
-              onDone={setDone}
+          {!done ? (  // this will essentially check if the upload stage is done 
+            <Upload
+              onPurchase={setPurchase} // this will return the purchase object
+              onDone={setDone} //This will retyrn the done object and it should be set to true
             />
           ) : (
             <div>
-              {" "}
+              
               <Checkout
                               onSuccess={setSuccess}
                               onReturn={setDone}
                               purchase={purchase!}
                               customer={customer!}
 
-             />{" "}
+             />
             </div>
           )}
         </div>

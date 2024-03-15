@@ -1,10 +1,9 @@
-import superbase from "../../database/superbase";
+import superbase from "../../databaseInitialise/superbase";
 import {fetchUser} from "./fetch";
 import { purchase,customer } from "@/utils/constructs";
 
-export async function saveUser(user: any) {
-    // saves user to customer table with these fields: UserId(foreign key for user table), Fname, Lname, Org, Add1, Add2, Zip, MobileNumber, Email
-    // it needs to get user id first
+export async function saveUser(user: any) { //save the information of the user to the customer table
+
     const { data, error } = await superbase.from('Customer').insert([
         {
             UserID: user.id,
@@ -29,7 +28,7 @@ export async function saveUser(user: any) {
     };
 
 
-    export async function savePurchase(purchase: purchase, customer: customer) {
+    export async function savePurchase(purchase: purchase, customer: customer) { 
         // saves purchase to purchase table with these fields: id, created_at, STL, Price, Progress, Paid, Material, Finish, Weight, Email, Customer, Count
         const { data, error } = await superbase.from('Purchases').insert([
             {

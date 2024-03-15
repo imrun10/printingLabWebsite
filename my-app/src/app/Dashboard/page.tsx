@@ -2,7 +2,7 @@
 'use client'
 import * as React from 'react';
 import AddButton from '@/components/sticky';
-import Header from '@/components/Header';
+import Header from '@/components/sections/Header';
 import { fetchUser, fetchPurchase } from '@/api/database/fetch';
 import { customer, purchase } from '@/utils/constructs';
 import { useAmp } from 'next/amp';

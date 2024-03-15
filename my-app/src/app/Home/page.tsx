@@ -5,7 +5,7 @@ export const metadata = {
 
 import Hero from '@/components/hero'
 import Features from '@/components/features'
-import Header from '@/components/Header'
+import Header from '@/components/sections/Header'
 import Contact from '@/components/contactForm'
 
 export default function Home() {
