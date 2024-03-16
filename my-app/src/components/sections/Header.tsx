@@ -8,7 +8,7 @@ import { Typography } from '@mui/material';
 import Link from 'next/link';
 import supabase from '@/databaseInitialise/superbase';
 import { useRouter } from 'next/navigation';
-import Logo from '/public/AUBH-Logo.svg';
+import Logo from '@/public/AUBH-Logo.svg';
 
 const Header: React.FC = (user) => {
     const router = useRouter(); // router for routing
