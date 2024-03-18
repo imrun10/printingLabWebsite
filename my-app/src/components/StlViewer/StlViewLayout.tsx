@@ -11,7 +11,7 @@ import Cards from "../Card";
 import Link from "next/link";
 import { weightCosts } from "@/utils/calcs";
 import StlValidation from "./ValidateStl";
-import { sendEmailwAttachment } from "../../utils/sendEmai";
+import { sendEmailwAttachment } from "../../utils/sendEmail";
 import { send } from "process";
 import { purchase } from "../../utils/constructs";
 import { on } from "events";

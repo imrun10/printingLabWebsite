@@ -7,7 +7,7 @@ import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import Link from "next/link";
 import Footer from "@/components/footer";
 import { send } from "process";
-import { sendEmail } from "@/utils/sendEmai";
+import { sendEmail } from "@/utils/sendEmail";
 import { useEffect } from "react";
 import Tabs from "@mui/joy/Tabs";
 import TabList from "@mui/joy/TabList";
