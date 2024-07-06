@@ -1,5 +1,5 @@
 'use client'
-import SignUp from "@/components/signInUp/signInUp"
+import SignUp from "@/components/signInUp/signUp"
 
 
 export default function Register(){

@@ -33,7 +33,7 @@ export interface purchase{ // purchase object for table
   Email: string;
   Customer: string;
   Count: number;
-  color: string;
+  Color: string;
 }
 export interface Finish { // finish object for table
   Name: string;

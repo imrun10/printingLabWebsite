@@ -6,13 +6,13 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 interface StlFileReaderProps {
   file: File;
   onData: (data: number[]) => void;
-  onSize: (size: number) => void;
   onCheck: (check: string) => void;
 }
 
-export default function StlViewer({ file, onData, onSize, onCheck }: StlFileReaderProps) {
+export default function StlViewer({ file, onData, onCheck }: StlFileReaderProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const meshRef = useRef<THREE.Mesh | null>(null);
+  const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
   const [width, setWidth] = useState<number>(0);
   const [height, setHeight] = useState<number>(0);
   const [size, setSize] = useState<number[]>([0, 0, 0]);
@@ -54,6 +54,7 @@ export default function StlViewer({ file, onData, onSize, onCheck }: StlFileRead
           const renderer = new THREE.WebGLRenderer({ antialias: true });
           renderer.setSize(width, height);
           renderer.shadowMap.enabled = true;
+          rendererRef.current = renderer;
 
           const light = new THREE.DirectionalLight(0xffffff, 1);
           light.position.set(1, 1, 1);
@@ -85,9 +86,11 @@ export default function StlViewer({ file, onData, onSize, onCheck }: StlFileRead
           mesh.receiveShadow = true;
 
           const renderScene = () => {
-            renderer.setSize(width, height);
-            renderer.render(scene, camera);
-            requestAnimationFrame(renderScene);
+            if (rendererRef.current) {
+              rendererRef.current.setSize(width, height);
+              rendererRef.current.render(scene, camera);
+              requestAnimationFrame(renderScene);
+            }
           };
 
           renderScene();
@@ -99,6 +102,10 @@ export default function StlViewer({ file, onData, onSize, onCheck }: StlFileRead
         meshRef.current.geometry.dispose();
         meshRef.current.parent?.remove(meshRef.current);
         meshRef.current = null;
+      }
+      if (rendererRef.current) {
+        rendererRef.current.dispose(); // Dispose renderer
+        rendererRef.current = null;
       }
     }
   }, [file, width, height]);

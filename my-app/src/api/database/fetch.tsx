@@ -17,6 +17,34 @@ export async function fetchItem(table:string, coloumn:string) { //generic fetech
   }
 }
 
+export async function fetchRecord(table:string, id:string) { //fetches all records from a table
+  try {
+    const { data, error } = await superbase.from(table).select("*").eq("id", id);
+    if (error) {
+      console.log("jksvjhlkblhjb")
+      console.log(error);
+      throw new Error(error.message);
+    }
+    return data;
+  } catch (error) {
+    console.log("Error fetching record:", error);
+    return [];
+  }
+}
+
+export async function fetchItemFromData(table:string, coloumn:string, dataVal:string, dataName:string) { //fetches item from data
+  try {
+    const { data, error } = await superbase.from(table).select(coloumn).eq(dataName, dataVal);
+    if (error) {
+      throw new Error(error.message);
+    }
+    return data;
+  } catch (error) {
+    console.log("Error fetching",coloumn, "from", table, error);
+    return [];
+  }
+}
+
 export async function fetchMaterials() { //fetches all materials
   try {
     const { data, error } = await superbase.from("Materials").select("*");
@@ -48,9 +76,10 @@ export async function fetchCustomer(userid:string) { //fetches customer (informa
 }
 
 
+
 export async function fetchPurchase(userid:string) { //fetches purchase by user id
   try {
-    const { data, error } = await superbase.from("Purchases").select("*").eq("Customer_ID", userid);
+    const { data, error } = await superbase.from("Purchases").select("*").eq("Email", userid);
     if (error) {
       console.log("Error fetching purchase:", error);
       throw new Error(error.message);

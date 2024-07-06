@@ -22,23 +22,26 @@ export default function SignUp() {
   const [address2, setAddress2] = useState('');
   const [zip, setZip] = useState('');
   const [address, setAddress] = useState('');
+  const [country, setCountry] = useState('');
+  const [city, setCity] = useState('');
+  const [error, setError] = useState('');
   const [mobileNumber, setMobileNumber] = useState('');
 
   const handleSignUp = async (e:any) => {
     e.preventDefault();
 
      // Check for empty fields
-  
+  //testing123
 
   const { data, error } = await supabase.auth.signUp({
     email: email,
     password: password,
-  });
+  }) 
 
   if (error) {
-    console.error('Error signing up:', error.message);
+    console.error('Error signing up:ss', error.message);
   } else {
-    saveUser({id:data.user?.id, Fname:Fname, Lname:Lname, org:org, address:address, address2:address2, zip:zip, mobileNumber:mobileNumber, email:email})
+    saveUser({id:data.user?.id, Fname:Fname, Lname:Lname, org:org, address:address, address2:address2, Country:country, City:city , zip:zip, mobileNumber:mobileNumber, email:email})
     console.log('Signed up successfully');
     console.log(data.user!.id)
     router.push('/login');
@@ -159,9 +162,29 @@ export default function SignUp() {
                 margin="normal"
               />
               </div>
+              <div className='flex horizontal gap-5'>
+              <TextField
+                type="text"
+                label="Country"
+                value={country}
+                onChange={(e) => setCountry(e.target.value)}
+                required
+                fullWidth
+                margin="normal"
+              />
+              <TextField
+                type="text"
+                label="City"
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+                required
+                fullWidth
+                margin="normal"
+              />
+              </div>
               <Button
                 type="submit"
-                variant="contained"
+                variant="outlined"
                 color="primary"
                 fullWidth
                 style={{ marginTop: '20px' }}

@@ -1,3 +1,4 @@
+"use client";
 import * as React from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import AppBar from "@mui/material/AppBar";
@@ -14,7 +15,7 @@ import Typography from "@mui/material/Typography";
 import AddressForm from "./AddressForm";
 import PaymentForm from "./PaymentForm";
 import Review from "./Review";
-import { purchase,customer } from "@/utils/constructs";
+import { purchase, customer } from "@/utils/constructs";
 import { useRouter } from "next/navigation";
 
 function Copyright() {
@@ -32,44 +33,47 @@ function Copyright() {
 
 const steps = ["Shipping address", "Payment details", "Review your order"];
 
-function useGetStepContent(step:number,purchase:purchase,customer:customer) {
-  const [address, setAddress] = React.useState<customer>(customer);
+function getStepContent(step: number, address: customer, purchase: purchase, customer: customer, setAddress: React.Dispatch<React.SetStateAction<customer>>) {
   switch (step) {
     case 0:
       return <AddressForm userInfo={customer} onAddress={setAddress} />;
     case 1:
-      return <PaymentForm />;
+      return <PaymentForm />;  // Assuming you will use PaymentForm here
     case 2:
-      return <Review address={address} purchase={purchase} customer={customer}/>;
+      return <Review address={address} purchase={purchase} customer={customer} />;
     default:
       throw new Error("Unknown step");
   }
 }
+
 interface CheckoutProps {
   onSuccess: (success: boolean) => void;
   onReturn: (done: boolean) => void;
   purchase: purchase;
   customer: customer;
 }
-export default function Checkout(
-  { onSuccess, onReturn, purchase, customer}: CheckoutProps
-) {
+
+const Checkout: React.FC<CheckoutProps> = ({ onSuccess, onReturn, purchase, customer }) => {
+  const [activeStep, setActiveStep] = React.useState(0);
+  const [address, setAddress] = React.useState<customer>(customer);
+  const router = useRouter();
+
   React.useEffect(() => {
     console.log(customer, "customer2");
-  } , []);
-  const [activeStep, setActiveStep] = React.useState(0);
-  const route = useRouter();
-
+  }, [customer]);
 
   const handleNext = () => {
-    if (activeStep < 3) {
-    setActiveStep(activeStep + 1);}
-    else {
-      route.push("/dashboard")
+    console.log('Next step clicked');
+    if (activeStep < steps.length - 1) {
+      setActiveStep(activeStep + 1);
+    } else {
+      onSuccess(true);
+      router.push("/dashboard");
     }
   };
 
   const handleBack = () => {
+    console.log('Back step clicked');
     setActiveStep(activeStep - 1);
   };
 
@@ -113,13 +117,13 @@ export default function Checkout(
               </Typography>
               <Typography variant="subtitle1">
                 Your order number is #2001539. We have emailed your order
-                confirmation, and will send you an update when your order has
+                confirmation and will send you an update when your order has
                 shipped.
               </Typography>
             </React.Fragment>
           ) : (
             <React.Fragment>
-              {useGetStepContent(activeStep,purchase,customer)}
+              {getStepContent(activeStep, address, purchase, customer, setAddress)}
               <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
                 {activeStep !== 0 && (
                   <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
@@ -142,3 +146,7 @@ export default function Checkout(
     </React.Fragment>
   );
 }
+
+Checkout.displayName = "Checkout";
+
+export default Checkout;

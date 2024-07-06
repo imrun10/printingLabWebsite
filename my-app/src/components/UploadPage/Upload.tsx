@@ -10,6 +10,7 @@ import { fetchMaterials, fetchFinish,fetchItem } from "../../api/database/fetch"
 import Cards from "../Card";
 import { updatePrice } from "@/utils/funcs";
 import { purchase } from "../../utils/constructs";
+import StlDisplay from "../dashboard/StlDisplay";
 
 
 
@@ -33,6 +34,7 @@ export default function Upload({onPurchase,onDone}:purchasing) {
   const [done, setDone] = useState<boolean>(false); // done boolean
   const [size, setSize] = useState<number[]>([0,0,0]); // size of the model needs to be redone
   const [check, setCheck] = useState<string>(""); // idk
+  const [stringFile, setStringFile] = useState<string>(""); // string file
   const router = useRouter();
 
 
@@ -77,7 +79,16 @@ useEffect(() => { //use memo might be better but idk
 
 
 
-
+function bufferize(file:File) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      resolve(reader.result);
+    };
+    reader.onerror = reject;
+    reader.readAsArrayBuffer(file);
+  });
+}
     
 
 
@@ -100,7 +111,7 @@ useEffect(() => { //use memo might be better but idk
       setTab(4);
 
     } else if (tab === 4 && color) {
-      purchase.Price = price;
+      purchase.Price = price.toFixed(2).toString();
       purchase.color = color;
       purchase.Finish = selectedFinish;
       purchase.Material = selectedMaterial;
@@ -150,7 +161,7 @@ useEffect(() => {
     <div className="grid-rows-2 gap-0">
           <div className="h-96 grid grid-cols-4 gap-0 flex-1">
       <div className="container display item-shadow col-span-3 flex flex-col">
-        {tab === 1 && selectedFile && <StlViewer file={selectedFile} onData={setSize} onSize={setVolume} onCheck={setCheck}/>}
+        {tab === 1 && selectedFile && <StlViewer file={selectedFile} onData={setSize} onCheck={setCheck}/>}
         {tab === 2 &&
           materials.map((material) => {
             return (

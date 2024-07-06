@@ -22,30 +22,34 @@ export default function Contact() {
         };
     }, [emailSent]);
 
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const form = e.currentTarget;
+        const email = (form.elements.namedItem("email") as HTMLInputElement)?.value;
+        const firstName = (form.elements.namedItem("firstName") as HTMLInputElement)?.value;
+        const lastName = (form.elements.namedItem("lastName") as HTMLInputElement)?.value;
+        const organization = (form.elements.namedItem("organization") as HTMLInputElement)?.value;
+        const message = (form.elements.namedItem("message") as HTMLTextAreaElement)?.value;
+
+        const emailContent = `
+            <p> ${email}</p>
+            <p><strong>Name:</strong> ${firstName} ${lastName}</p>
+            <p><strong>Organization:</strong> ${organization}</p>
+            <p><strong>Email:</strong> ${email}</p>
+            <p><strong>Message:</strong> ${message}</p>
+        `;
+
+        sendEmail(emailContent);
+        window.alert('Thank you for your submission!');
+        form.reset(); // Reset the form fields
+        setEmailSent(true);
+    };
+
     return (
         <div className="pt-10 pb-24">  
             <div className="max-w-md mx-auto">
                 <h2 className="text-2xl font-bold text-center mb-4">Contact Us</h2>
-                <form className="space-y-4" onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
-                    e.preventDefault();
-                    const form = e.currentTarget;
-                    const email = (form.elements.namedItem("email") as HTMLInputElement)?.value;
-                    const firstName = (form.elements.namedItem("firstName") as HTMLInputElement)?.value;
-                    const lastName = (form.elements.namedItem("lastName") as HTMLInputElement)?.value;
-                    const organization = (form.elements.namedItem("organization") as HTMLInputElement)?.value;
-                    const message = (form.elements.namedItem("message") as HTMLTextAreaElement)?.value;
-                    setEmailSent(true); 
-                    
-                    const emailContent = `
-                        <p> ${email}</p>
-                        <p><strong>Name:</strong> ${firstName} ${lastName}</p>
-                        <p><strong>Organization:</strong> ${organization}</p>
-                        <p><strong>Email:</strong> ${email}</p>
-                        <p><strong>Message:</strong> ${message}</p>
-                    `;
-                    
-                    sendEmail(emailContent);
-                }}>
+                <form className="space-y-4" onSubmit={handleSubmit}>
                     <input type="text" className="w-full px-4 py-2 border border-gray-500 rounded-md" placeholder="First Name" required />
                     <input type="text" className="w-full px-4 py-2 border border-gray-500 rounded-md" placeholder="Last Name" required />
                     <input type="text" className="w-full px-4 py-2 border border-gray-500 rounded-md" placeholder="Organization" required />

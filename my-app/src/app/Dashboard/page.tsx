@@ -7,25 +7,28 @@ import { fetchUser, fetchPurchase } from '@/api/database/fetch';
 import { customer, purchase } from '@/utils/constructs';
 import { useAmp } from 'next/amp';
 import Cards from '@/components/dashboard/Card';
-
+import { fetchMaterials } from '@/api/database/fetch';
+import { useEffect } from 'react';
 export default function Dashboard() {
-  const [purchases, setPurchases] = React.useState<any>([]);
+  const [purchases, setPurchases] = React.useState<purchase[]>([]);
   const [done, setDone] = React.useState<boolean>(false);
 
 
- 
-  React.useEffect(() => {
+
+
+  useEffect(() => {
     fetchUser()
       .then((user) => {
         if (user) {
           console.log('Signed in already', user.user.id);
-          fetchPurchase(user.user.id)
+          console.log(user.user.email);
+          fetchPurchase(user.user.email)
             .then((data) => {
               setPurchases(data || []);
             })
             .catch((error) => {
               console.log(error);
-            });
+            }); console.log(purchases)
         } else {
           console.log('Not signed in');
         }
@@ -34,7 +37,7 @@ export default function Dashboard() {
       .finally(() => setDone(true));
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     console.log(purchases, 'purchases');
   }, [purchases]);
 
@@ -45,13 +48,7 @@ export default function Dashboard() {
         {purchases.map((purchase: any) => (
           <Cards
             key={purchase.id}
-            material={purchase.Material}
-            finish={purchase.Finish}
-            color={purchase.color}
-            price={purchase.Price}
-            progress={purchase.progress}
-            count={purchase.count}
-            stlFile={purchase.stlFile}
+            currentPurchase={purchase}
           />
         ))}
       </div>

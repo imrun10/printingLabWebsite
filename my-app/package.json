@@ -9,11 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@headlessui/react": "^1.7.17",
-
     "@emotion/cache": "^11.11.0",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
+    "@headlessui/react": "^1.7.17",
     "@jscad/io": "^2.4.6",
     "@jscad/io-utils": "^2.0.25",
     "@jscad/modeling": "^2.12.0",
@@ -40,6 +39,7 @@
     "bufferutil": "^4.0.8",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "countries-list": "^3.1.0",
     "date-selector-react": "^1.2.6",
     "eslint": "8.46.0",
     "eslint-config-next": "13.4.12",
@@ -71,8 +71,8 @@
     "ws": "^8.16.0"
   },
   "devDependencies": {
-    "@types/nodemailer": "^6.4.14",
     "@types/aos": "^3.0.7",
+    "@types/nodemailer": "^6.4.14",
     "@types/paypal__checkout-server-sdk": "^1.0.8",
     "@types/react-datepicker": "^4.19.3",
     "@types/three": "^0.156.0",

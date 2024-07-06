@@ -19,6 +19,7 @@ import { purchase } from "@/utils/constructs";
 
 const UploadPage: React.FC = () => {
   const [done, setDone] = useState<boolean>(false); // boolean to switch between the upload and pay stage
+  const [success, setSuccess] = useState<boolean>(false); // boolean to check if the payment was successful
   const [customer, setCustomer] = useState<customer | null>(null); // customer object
   const [purchase, setPurchase] = useState<purchase | null>(null); // purchase object
 
@@ -40,7 +41,10 @@ const UploadPage: React.FC = () => {
         console.log(customer, "customer"); // double checks the customer object
       }
       , [customer]);
-
+useEffect(() => {
+  console.log(purchase, "purchase") // double checks the purchase object
+}
+, [purchase]);
 
 
 
