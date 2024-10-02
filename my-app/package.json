@@ -58,7 +58,7 @@
     "react-spring": "^9.7.3",
     "react-stl-viewer": "^2.3.0",
     "react-three-fiber": "^6.0.13",
-    "resend": "^0.16.0",
+    "resend": "^4.0.0",
     "tailwind-merge": "^2.2.0",
     "tailwindcss-animate": "^1.0.7",
     "three": "^0.157.0",
