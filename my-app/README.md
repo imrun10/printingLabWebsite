@@ -21,7 +21,7 @@ To install and set up the project, follow these steps:
 
 To use the project, follow these steps:
 
-1. Start the development server: `npm start`
+1. Start the development server: `npm run dev`
 2. Open your browser and go to `http://localhost:3000`
 3. Explore the booking site and make a booking
 
