@@ -27,7 +27,7 @@ To use the project, follow these steps:
 
 ## Contributing
 
-We welcome contributions! See the [CONTRIBUTING](CONTRIBUTING.md) file for details.
+We welcome contributions! See the [CONTRIBUTING](CONTRIBUTING) file for details.
 
 ## License
 
