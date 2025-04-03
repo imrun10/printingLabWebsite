@@ -4,12 +4,10 @@ This is a full stack website for the GOFAB3D lab using Next.js, Tailwind, React.
 
 ## Table of Contents
 
-- [Project Name](#project-name)
-  - [Table of Contents](#table-of-contents)
-  - [Installation](#installation)
-  - [Usage](#usage)
-  - [Contributing](#contributing)
-  - [License](#license)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
 
 ## Installation
 
