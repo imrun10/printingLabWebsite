@@ -1,0 +1,25 @@
+.card {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  color: black;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.card-selected {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #6CA8FF;
+  color: white;
+  transition: background 0.3s ease, color 0.3s ease;
+}
