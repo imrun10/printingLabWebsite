@@ -1,20 +1,22 @@
 # Project Name
 
-This project is a booking site for Ututor Printing Lab. It allows users to book printing services online.
+This is a full stack website for the GOFAB3D lab using Next.js, Tailwind, React.js & SQL.
 
 ## Table of Contents
 
-- [Installation](#installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
+- [Project Name](#project-name)
+  - [Table of Contents](#table-of-contents)
+  - [Installation](#installation)
+  - [Usage](#usage)
+  - [Contributing](#contributing)
+  - [License](#license)
 
 ## Installation
 
 To install and set up the project, follow these steps:
 
-1. Clone the repository: `git clone https://github.com/ututor/printing-lab.git`
-2. Navigate to the project directory: `cd printing-lab`
+1. Clone the repository: `git clone https://github.com/imrun10/printingLabWebsite.git`
+2. Navigate to the project directory: `cd printingLabWebsite`
 3. Install dependencies: `npm install`
 
 ## Usage
